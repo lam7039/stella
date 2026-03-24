@@ -3,11 +3,11 @@
 namespace Stella\Support\StrTraits;
 
 trait StrMutateTrait {
-    public function replace(string|array $search, string $replace): self {
-        return new self(str_replace($search, $replace, $this->value));
+    public function replace(string|array $search, string $replace): static {
+        return $this->new(str_replace($search, $replace, $this->value));
     }
 
-    public function remove(string|array $search): self {
-        return new self($this->replace($search, '')->value());
+    public function remove(string|array $search): static {
+        return $this->new($this->replace($search, '')->value());
     }
 }

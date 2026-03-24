@@ -3,27 +3,27 @@
 namespace Stella\Support\StrTraits;
 
 trait StrFormatTrait {
-    public function camel(): self {
+    public function camel(): static {
         $value = preg_replace('/[\s\-_]+/', ' ', $this->value);
         $value = mb_convert_case($value, MB_CASE_TITLE);
         $value = str_replace(' ', '', $value);
-        return new self(mb_lcfirst($value));
+        return $this->new(mb_lcfirst($value));
     }
 
-    public function pascal(): self {
-        return new self(mb_ucfirst($this->camel()->value()));
+    public function pascal(): static {
+        return $this->new(mb_ucfirst($this->camel()->value()));
     }
 
-    public function snake(): self {
+    public function snake(): static {
         $value = preg_replace('/[A-Z]/', '_$0', $this->value);
         $value = mb_strtolower(trim($value, '_'));
         $value = str_replace(' ', '_', $value);
-        return new self($value);
+        return $this->new($value);
     }
 
-    public function slug(): self {
+    public function slug(): static {
         $value = preg_replace('/[^A-Za-z0-9]+/', '-', $this->value);
         $value = mb_strtolower(trim($value, '-'));
-        return new self($value);
+        return $this->new($value);
     }
 }

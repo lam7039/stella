@@ -2,16 +2,18 @@
 
 namespace Stella\Support;
 
-use Stella\Support\StrTraits\StrCaseTrait;
-use Stella\Support\StrTraits\StrTrimTrait;
-use Stella\Support\StrTraits\StrSearchTrait;
-use Stella\Support\StrTraits\StrCastTrait;
-use Stella\Support\StrTraits\StrFormatTrait;
-use Stella\Support\StrTraits\StrMutateTrait;
-use Stella\Support\StrTraits\StrValidationTrait;
-use Stella\Support\StrTraits\StrUtilTrait;
+use Stella\Support\StrTraits\{
+    StrCaseTrait,
+    StrTrimTrait,
+    StrSearchTrait,
+    StrCastTrait,
+    StrFormatTrait,
+    StrMutateTrait,
+    StrValidationTrait,
+    StrUtilTrait
+};
 
-class Str {
+final class Str {
     use StrCaseTrait;
     use StrTrimTrait;
     use StrSearchTrait;
@@ -21,13 +23,21 @@ class Str {
     use StrValidationTrait;
     use StrUtilTrait;
 
-    private function __construct(private string $value) {}
+    public function __construct(private readonly string $value) {}
 
-    public static function of(string $value): self {
-        return new self($value);
+    protected static function new(string $value): static {
+        return new static($value);
+    }
+
+    public static function of(string $value): static {
+        return self::new($value);
     }
 
     public function value(): string {
+        return $this->value;
+    }
+
+    public function __toString(): string {
         return $this->value;
     }
 }

@@ -7,11 +7,11 @@ trait StrUtilTrait {
         return mb_strlen($this->value);
     }
 
-    public function limit(int $limit, string $end = '...'): self {
+    public function limit(int $limit, string $end = '...'): static {
         if ($this->length() > $limit) {
-            return mb_substr($this->value, 0, $limit) . $end;
+            return $this->new(mb_substr($this->value, 0, $limit) . $end);
         }
 
-        return $this->value;
+        return $this->new($this->value);
     }
 }
