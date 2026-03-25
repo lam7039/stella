@@ -3,25 +3,25 @@
 namespace Stella\Support;
 
 use Stella\Support\Traits\Str\{
-    StrCaseTrait,
-    StrTrimTrait,
-    StrSearchTrait,
-    StrCastTrait,
-    StrFormatTrait,
-    StrMutateTrait,
-    StrValidationTrait,
-    StrUtilTrait
+    CaseTrait,
+    TrimTrait,
+    SearchTrait,
+    CastTrait,
+    FormatTrait,
+    MutateTrait,
+    ValidationTrait,
+    UtilTrait
 };
 
 final class Str {
-    use StrCaseTrait;
-    use StrTrimTrait;
-    use StrSearchTrait;
-    use StrCastTrait;
-    use StrFormatTrait;
-    use StrMutateTrait;
-    use StrValidationTrait;
-    use StrUtilTrait;
+    use CaseTrait;
+    use TrimTrait;
+    use SearchTrait;
+    use CastTrait;
+    use FormatTrait;
+    use MutateTrait;
+    use ValidationTrait;
+    use UtilTrait;
 
     public function __construct(private readonly string $value) {}
 
