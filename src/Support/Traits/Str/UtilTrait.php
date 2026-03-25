@@ -9,7 +9,7 @@ trait UtilTrait {
         return mb_strlen($this->value());
     }
 
-    public function repeat(int $times = 1): self {
+    public function repeat(int $times): self {
         return $this->with(str_repeat($this->value(), $times));
     }
 
