@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrMutateTrait {
+trait MutateTrait {
     public function replace(string|array $search, string $replace): self {
         return $this->with(str_replace($search, $replace, $this->value()));
     }

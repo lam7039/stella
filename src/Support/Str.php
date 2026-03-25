@@ -2,7 +2,7 @@
 
 namespace Stella\Support;
 
-use Stella\Support\StrTraits\{
+use Stella\Support\Traits\Str\{
     StrCaseTrait,
     StrTrimTrait,
     StrSearchTrait,

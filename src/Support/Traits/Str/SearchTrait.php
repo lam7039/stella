@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrSearchTrait {
+trait SearchTrait {
     public function contains(string $needle): bool {
         return str_contains($this->value(), $needle);
     }

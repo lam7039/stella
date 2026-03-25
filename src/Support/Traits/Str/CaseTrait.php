@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrCaseTrait {
+trait CaseTrait {
     public function upper(): self {
         return $this->with(mb_strtoupper($this->value()));
     }

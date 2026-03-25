@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrTrimTrait {
+trait TrimTrait {
     public function trim(string $characters = " \n\r\t\v\x00"): self {
         return $this->with(trim($this->value(), $characters));
     }

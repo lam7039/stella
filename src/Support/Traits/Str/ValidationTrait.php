@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrValidationTrait {
+trait ValidationTrait {
     public function isEmpty(): bool {
         return trim($this->value()) === '';
     }

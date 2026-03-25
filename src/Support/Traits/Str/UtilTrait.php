@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrUtilTrait {
+trait UtilTrait {
     public function length(): int {
         return mb_strlen($this->value());
     }

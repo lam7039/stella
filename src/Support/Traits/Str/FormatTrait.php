@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrFormatTrait {
+trait FormatTrait {
     public function camel(): self {
         $value = preg_replace('/[\s\-_]+/', ' ', $this->value());
         $value = mb_convert_case($value, MB_CASE_TITLE);

@@ -1,8 +1,8 @@
 <?php
 
-namespace Stella\Support\StrTraits;
+namespace Stella\Support\Traits\Str;
 
-trait StrCastTrait {
+trait CastTrait {
     public function int(int $base = 10): int {
         return intval($this->value(), $base);
     }
