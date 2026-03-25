@@ -4,9 +4,13 @@ namespace Stella\Support\Traits\Str;
 
 trait UtilTrait {
     use StringTrait;
-    
+
     public function length(): int {
         return mb_strlen($this->value());
+    }
+
+    public function repeat(int $times = 1): self {
+        return $this->with(str_repeat($this->value(), $times));
     }
 
     public function limit(int $limit, string $end = '...'): self {
