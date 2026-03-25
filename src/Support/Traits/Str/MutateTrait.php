@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait MutateTrait {
+    use StringTrait;
+    
     public function replace(string|array $search, string $replace): self {
         return $this->with(str_replace($search, $replace, $this->value()));
     }

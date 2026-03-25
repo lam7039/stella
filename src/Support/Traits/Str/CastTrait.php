@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait CastTrait {
+    use StringTrait;
+    
     public function int(int $base = 10): int {
         return intval($this->value(), $base);
     }

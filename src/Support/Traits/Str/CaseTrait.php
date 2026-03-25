@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait CaseTrait {
+    use StringTrait;
+
     public function upper(): self {
         return $this->with(mb_strtoupper($this->value()));
     }

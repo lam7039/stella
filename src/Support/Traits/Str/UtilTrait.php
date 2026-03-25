@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait UtilTrait {
+    use StringTrait;
+    
     public function length(): int {
         return mb_strlen($this->value());
     }

@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait ValidationTrait {
+    use StringTrait;
+    
     public function isEmpty(): bool {
         return trim($this->value()) === '';
     }

@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait FormatTrait {
+    use StringTrait;
+    
     public function camel(): self {
         $value = preg_replace('/[\s\-_]+/', ' ', $this->value());
         $value = mb_convert_case($value, MB_CASE_TITLE);

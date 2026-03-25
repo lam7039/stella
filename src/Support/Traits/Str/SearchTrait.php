@@ -3,6 +3,8 @@
 namespace Stella\Support\Traits\Str;
 
 trait SearchTrait {
+    use StringTrait;
+    
     public function contains(string $needle): bool {
         return str_contains($this->value(), $needle);
     }
