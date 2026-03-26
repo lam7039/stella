@@ -38,7 +38,7 @@ if (! function_exists('config')) {
 
 if (! function_exists('output')) {
     function output(mixed $param) : void {
-        if (!$param instanceof \Throwable) {
+        if (! $param instanceof \Throwable) {
             //TODO: use unified style with log but without table
             echo '<pre>' . var_export($param, true) . '</pre>';
             return;

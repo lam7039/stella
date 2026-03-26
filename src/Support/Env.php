@@ -11,7 +11,7 @@ class Env {
 
         foreach ($lines as $line) {
             $line = trim($line);
-            if (!$line) {
+            if (! $line) {
                 continue;
             }
 
@@ -21,7 +21,7 @@ class Env {
     }
 
     public function get(string $key) : string|null {
-        if(!isset($this->env[$key])) {
+        if(! isset($this->env[$key])) {
             // LOG_WARNING('Environment key does not exist');
             return null;
         }
