@@ -23,7 +23,7 @@ final class Str {
     use ValidationTrait;
     use UtilTrait;
 
-    public function __construct(private readonly string $value) {}
+    public function __construct(private readonly string $value = '') {}
 
     protected function with(string $value): self {
         return self::of($value);
