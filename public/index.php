@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../bootstrap/application.php';
+require_once __DIR__ . '/../bootstrap/app.php';
 
-echo str('this is a second test');
-exit;
+date_default_timezone_set(config('app.timezone'));
 
-$application = require_once __DIR__ . '/../app/application.php';
+dd(config('app.name'));
+
 
 //$app->handleRequest(Request::capture());

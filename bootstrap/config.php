@@ -1,4 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../config/application.php';
-require_once __DIR__ . '/../config/database.php';
+$config = [];
+foreach (glob(__DIR__ . '/../config/*.php') as $file) {
+    $name = basename($file, '.php');
+    $config[$name] = require_once $file;
+}
