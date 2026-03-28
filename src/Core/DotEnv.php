@@ -5,7 +5,7 @@ namespace Stella\Core;
 class DotEnv {
     private static array $items = [];
 
-    public static function load(string $path): void {
+    public static function load(?string $path = null): void {
         $path ??= env_path();
 
         if (! file_exists($path)) {
@@ -37,7 +37,7 @@ class DotEnv {
         }
     }
 
-    public static function get(string $key, mixed $default = null): string|null {
+    public static function get(string $key, mixed $default = null): ?string {
         return self::$items[$key] ?? $_ENV[$key] ?? $default;
     }
 

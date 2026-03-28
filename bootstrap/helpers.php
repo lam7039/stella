@@ -14,14 +14,22 @@ if (! function_exists('base_path')) {
     function base_path(string $path = ''): string {
         $base = dirname(__DIR__);
         $path = ltrim($path, '/\\');
-        $full = $base . DIRECTORY_SEPARATOR . $path;
-        return realpath($full) ?: $full;
+
+        return $path === ''
+            ? $base
+            : $base . '/' . $path;
     }
 }
 
 if (! function_exists('config_path')) {
     function config_path(string $path = ''): string {
         return base_path('config/' . ltrim($path, '/\\'));
+    }
+}
+
+if (! function_exists('public_path')) {
+    function public_path(string $path = ''): string {
+        return base_path('public/' . ltrim($path, '/\\'));
     }
 }
 
@@ -50,7 +58,7 @@ if (! function_exists('env_path')) {
 }
 
 if (! function_exists('env')) {
-    function env(string $key, mixed $default = null) : string|null {
+    function env(string $key, mixed $default = null) : ?string {
         return DotEnv::get($key, $default);
     }
 }
@@ -70,7 +78,7 @@ if (! function_exists('output')) {
         }
 
         //TODO: see if this can be unified with the file logger
-        echo file_get_contents('./public/templates/debug.html');
+        echo file_get_contents(base_path('public/templates/debug.html'));
 
         $defaults = [
             'message' => 'n/a',

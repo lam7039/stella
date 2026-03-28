@@ -9,7 +9,7 @@ class Config {
         self::$items = $config;
     }
 
-    public static function get(string $key, mixed $default = null) : string|null {
+    public static function get(string $key, mixed $default = null) : ?string {
         $keys = explode('.', $key);
         $value = self::$items;
 
