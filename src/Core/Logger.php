@@ -51,7 +51,7 @@ class Logger {
         ?int $line = null
     ): void {
         if (! is_file($this->debugFile)) {
-            $this->initialize();
+            self::initialize();
         }
 
         [$file, $line] = $this->resolveCaller($file, $line);
@@ -67,7 +67,7 @@ class Logger {
             unlink($this->debugFile);
         }
 
-        $this->initialize();
+        self::initialize();
     }
 
     private function resolveCaller(?string $file, ?int $line): array {
@@ -78,6 +78,21 @@ class Logger {
 
         return [$file, $line];
     }
+
+    //TODO: look into this
+    // private function resolveCaller(?string $file, ?int $line): array {
+    //     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+
+    //     foreach ($trace as $frame) {
+    //         if (($frame['class'] ?? null) !== self::class) {
+    //             $file ??= isset($frame['file']) ? basename($frame['file']) : 'unknown';
+    //             $line ??= $frame['line'] ?? 0;
+    //             break;
+    //         }
+    //     }
+
+    //     return [$file ?? 'unknown', $line ?? 0];
+    // }
 
     private function buildRow(string $message, ErrorType $type, string $file, int $line): string {
         $timestamp = date('Y-m-d H:i:s');
@@ -92,5 +107,17 @@ class Logger {
                 <td>{$line}</td>
             </tr>
         HTML;
+    }
+
+    public function info(string $message, ?string $file = null, ?int $line = null): void {
+        $this->append($message, ErrorType::Info, $file, $line);
+    }
+
+    public function warning(string $message, ?string $file = null, ?int $line = null): void {
+        $this->append($message, ErrorType::Warning, $file, $line);
+    }
+
+    public function critical(string $message, ?string $file = null, ?int $line = null): void {
+        $this->append($message, ErrorType::Critical, $file, $line);
     }
 }
