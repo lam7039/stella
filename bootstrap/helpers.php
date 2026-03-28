@@ -1,7 +1,8 @@
 <?php
 
+use Stella\Core\DotEnv;
+use Stella\Core\Config;
 use Stella\Support\Str;
-use Stella\Support\Env;
 
 if (! function_exists('str')) {
     function str(string $value = ''): Str {
@@ -9,30 +10,54 @@ if (! function_exists('str')) {
     }
 }
 
+if (! function_exists('base_path')) {
+    function base_path(string $path = ''): string {
+        $base = dirname(__DIR__);
+        $path = ltrim($path, '/\\');
+        $full = $base . DIRECTORY_SEPARATOR . $path;
+        return realpath($full) ?: $full;
+    }
+}
+
+if (! function_exists('config_path')) {
+    function config_path(string $path = ''): string {
+        return base_path('config/' . ltrim($path, '/\\'));
+    }
+}
+
+if (! function_exists('storage_path')) {
+    function storage_path(string $path = ''): string {
+        return base_path('storage/' . ltrim($path, '/\\'));
+    }
+}
+
+if (! function_exists('src_path')) {
+    function src_path(string $path = ''): string {
+        return base_path('src/' . ltrim($path, '/\\'));
+    }
+}
+
+if (! function_exists('routes_path')) {
+    function routes_path(string $path = ''): string {
+        return base_path('routes/' . ltrim($path, '/\\'));
+    }
+}
+
+if (! function_exists('env_path')) {
+    function env_path(): string {
+        return base_path('.env');
+    }
+}
+
 if (! function_exists('env')) {
-    $env = new Env;
     function env(string $key, mixed $default = null) : string|null {
-        global $env;
-        return $env->get($key) ?? $default;
+        return DotEnv::get($key, $default);
     }
 }
 
 if (! function_exists('config')) {
     function config(string $key, mixed $default = null) {
-        global $config;
-
-        $keys = explode('.', $key);
-        $value = $config;
-
-        foreach ($keys as $k) {
-            if (! isset($value[$k])) {
-                return $default;
-            }
-
-            $value = $value[$k];
-        }
-
-        return $value;
+        return Config::get($key, $default);
     }
 }
 

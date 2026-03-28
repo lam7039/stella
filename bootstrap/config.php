@@ -1,7 +1,18 @@
 <?php
 
+use Stella\Core\DotEnv;
+use Stella\Core\Config;
+
+DotEnv::load();
+
 $config = [];
-foreach (glob(__DIR__ . '/../config/*.php') as $file) {
+
+$files = glob(config_path('*.php'));
+sort($files);
+
+foreach ($files as $file) {
     $name = basename($file, '.php');
-    $config[$name] = require_once $file;
+    $config[$name] = require $file;
 }
+
+Config::load($config);
