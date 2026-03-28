@@ -19,6 +19,6 @@ class LoggerServiceProvider
     }
 
     public function boot(App $app): void {
-        dd('Booting logger service provider');
+        // dd('Booting logger service provider');
     }
 }

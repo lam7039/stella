@@ -3,10 +3,17 @@
 use Stella\Core\DotEnv;
 use Stella\Core\Config;
 use Stella\Support\Str;
+use Stella\Support\Collection;
 
 if (! function_exists('str')) {
     function str(string $value = ''): Str {
         return Str::of($value);
+    }
+}
+
+if (! function_exists('collect')) {
+    function collect(array $items = []): Collection {
+        return new Collection($items);
     }
 }
 
