@@ -19,7 +19,6 @@ enum ErrorType : string {
 };
 
 class Logger {
-    private static ?self $instance = null;
     private readonly string $templatePath;
     private readonly string $debugFile;
 
@@ -28,22 +27,21 @@ class Logger {
         $this->debugFile = storage_path('debug.html');
     }
 
-    public static function instance(): self {
-        return self::$instance ??= new self;
-    }
-
-    public static function initialize(): self {
-        $logger = self::instance();
-
-        if (! is_file($logger->templatePath)) {
-            throw new \RuntimeException("Template file missing: {$logger->templatePath}");
+    private function initialize(): void {
+        if (is_file($this->debugFile)) {
+            return;
         }
 
-        if (! is_file($logger->debugFile)) {
-            copy($logger->templatePath, $logger->debugFile);
+        if (! is_file($this->templatePath)) {
+            throw new \RuntimeException("Template file missing: {$this->templatePath}");
         }
 
-        return $logger;
+        if (
+            ! copy($this->templatePath, $this->debugFile) &&
+            ! is_file($this->debugFile)
+        ) {
+            throw new \RuntimeException("Failed to create debug file: {$this->debugFile}");
+        }
     }
 
     public function append(
@@ -53,7 +51,7 @@ class Logger {
         ?int $line = null
     ): void {
         if (! is_file($this->debugFile)) {
-            self::initialize();
+            $this->initialize();
         }
 
         [$file, $line] = $this->resolveCaller($file, $line);
@@ -69,7 +67,7 @@ class Logger {
             unlink($this->debugFile);
         }
 
-        self::initialize();
+        $this->initialize();
     }
 
     private function resolveCaller(?string $file, ?int $line): array {
