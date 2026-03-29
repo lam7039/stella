@@ -14,14 +14,6 @@ class Handler {
     }
 
     public static function handleException(Throwable $e): void {
-        $key = self::makeKey($e->getMessage(), $e->getFile(), $e->getLine());
-
-        if (isset(self::$reported[$key])) {
-            return;
-        }
-
-        self::$reported[$key] = true;
-
         logger()->critical(
             sprintf('%s: %s', $e::class, $e->getMessage()),
             $e->getFile(),
@@ -39,14 +31,6 @@ class Handler {
     }
 
     public static function handleError(int $severity, string $message, string $file, int $line): bool {
-        $key = self::makeKey($message, $file, $line);
-
-        if (isset(self::$reported[$key])) {
-            return true;
-        }
-
-        self::$reported[$key] = true;
-
         logger()->append(
             $message,
             ErrorType::fromCode(self::mapSeverity($severity)),
@@ -68,24 +52,12 @@ class Handler {
         ])) {
             return;
         }
-        
-        $key = self::makeKey($error['message'], $error['file'], $error['line']);
-
-        if (isset(self::$reported[$key])) {
-            return;
-        }
-
-        self::$reported[$key] = true;
 
         logger()->critical(
             $error['message'],
             $error['file'],
             $error['line']
         );
-    }
-
-    private static function makeKey(string $message, string $file, int $line): string {
-        return md5($message . $file . $line);
     }
 
     private static function mapSeverity(int $severity): int {
