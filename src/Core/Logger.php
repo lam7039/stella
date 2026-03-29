@@ -32,7 +32,7 @@ class Logger {
         return self::$instance ??= new self;
     }
 
-    public static function initialize(): void {
+    public static function initialize(): self {
         $logger = self::instance();
 
         if (! is_file($logger->templatePath)) {
@@ -42,6 +42,8 @@ class Logger {
         if (! is_file($logger->debugFile)) {
             copy($logger->templatePath, $logger->debugFile);
         }
+
+        return $logger;
     }
 
     public function append(

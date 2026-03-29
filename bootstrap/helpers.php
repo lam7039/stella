@@ -1,7 +1,9 @@
 <?php
 
+use Stella\Core\App;
 use Stella\Core\DotEnv;
 use Stella\Core\Config;
+use Stella\Core\Logger;
 use Stella\Support\Str;
 use Stella\Support\Collection;
 
@@ -73,6 +75,18 @@ if (! function_exists('env')) {
 if (! function_exists('config')) {
     function config(string $key, mixed $default = null) {
         return Config::get($key, $default);
+    }
+}
+
+if (! function_exists('app')) {
+    function app(): App {
+        return App::instance();
+    }
+}
+
+if (! function_exists('logger')) {
+    function logger(): Logger {
+        return app()->get(Logger::class);
     }
 }
 

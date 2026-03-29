@@ -10,12 +10,6 @@ class LoggerServiceProvider
     public function register(App $app): void
     {
         $app->bind(Logger::class, fn () => Logger::initialize());
-
-        if (! function_exists('logger')) {
-            function logger(): Logger {
-                return Logger::instance();
-            }
-        }
     }
 
     public function boot(App $app): void {

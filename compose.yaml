@@ -5,7 +5,7 @@ services:
       - "8080:80"
     volumes:
       - ${PWD}:/var/www/html:z
-      - storage_data:/var/www/html/storage:z
+      - ./storage:/var/www/html/storage:z
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:z
     networks:
       - mysql_shared_network
@@ -16,7 +16,9 @@ services:
     build: ./docker/php
     volumes:
       - ${PWD}:/var/www/html:z
-      - storage_data:/var/www/html/storage:z
+      - ./storage:/var/www/html/storage:z
+    entrypoint: ["/var/www/html/docker/php/entrypoint.sh"]
+    command: ["php-fpm"]
     networks:
       - mysql_shared_network
 
