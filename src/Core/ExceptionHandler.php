@@ -19,7 +19,7 @@ class ExceptionHandler {
         http_response_code(500);
 
         if (config('app.debug')) {
-            echo $e->getMessage();
+            echo file_get_contents(storage_path('debug.html'));
             return;
         }
 

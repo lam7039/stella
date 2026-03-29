@@ -37,11 +37,28 @@ class DotEnv {
         }
     }
 
-    public static function get(string $key, mixed $default = null): ?string {
-        return self::$items[$key] ?? $_ENV[$key] ?? $default;
+    public static function get(string $key, mixed $default = null): mixed {
+        $value = self::$items[$key] ?? $_ENV[$key] ?? $default;
+        return self::cast($value);
     }
 
     public static function has(string $key): bool {
         return isset(self::$items[$key]) || isset($_ENV[$key]);
+    }
+
+    private static function cast(mixed $value) {
+        if (! is_string($value)) {
+            return $value;
+        }
+
+        return match (strtolower($value)) {
+            'true', '(true)' => true,
+            'false', '(false)' => false,
+            'null', '(null)' => null,
+            'empty', '(empty)' => '',
+            default => is_numeric($value)
+                ? (str_contains($value, '.') ? (float) $value : (int) $value)
+                : $value,
+        };
     }
 }

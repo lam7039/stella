@@ -67,13 +67,13 @@ if (! function_exists('env_path')) {
 }
 
 if (! function_exists('env')) {
-    function env(string $key, mixed $default = null) : ?string {
+    function env(string $key, mixed $default = null): mixed {
         return DotEnv::get($key, $default);
     }
 }
 
 if (! function_exists('config')) {
-    function config(string $key, mixed $default = null) {
+    function config(string $key, mixed $default = null): mixed {
         return Config::get($key, $default);
     }
 }
