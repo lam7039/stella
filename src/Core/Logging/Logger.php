@@ -1,30 +1,14 @@
 <?php
 
-namespace Stella\Core;
-
-enum ErrorType : string {
-    case Info = 'info';
-    case Warning = 'warning';
-    case Critical = 'critical';
-    case Unknown = 'unknown';
-
-    public static function fromCode(int $code) : ErrorType {
-        return match($code) {
-            1 => self::Info,
-            2 => self::Warning,
-            3 => self::Critical,
-            default => self::Unknown,
-        };
-    }
-};
+namespace Stella\Core\Logging;
 
 class Logger {
-    private readonly string $templatePath;
     private readonly string $debugFile;
+    private readonly string $templateFile;
 
-    public function __construct() {
-        $this->templatePath = public_path('templates/debug.html');
-        $this->debugFile = storage_path('debug.html');
+    public function __construct(?string $debugFile = null, ?string $templateFile = null) {
+        $this->debugFile = storage_path($debugFile ?? 'debug.html');
+        $this->templateFile = public_path($templateFile ?? 'templates/debug.html');
     }
 
     private function initialize(): void {
@@ -32,12 +16,12 @@ class Logger {
             return;
         }
 
-        if (! is_file($this->templatePath)) {
-            throw new \RuntimeException("Template file missing: {$this->templatePath}");
+        if (! is_file($this->templateFile)) {
+            throw new \RuntimeException("Template file missing: {$this->templateFile}");
         }
 
         if (
-            ! copy($this->templatePath, $this->debugFile) &&
+            ! copy($this->templateFile, $this->debugFile) &&
             ! is_file($this->debugFile)
         ) {
             throw new \RuntimeException("Failed to create debug file: {$this->debugFile}");
@@ -50,16 +34,15 @@ class Logger {
         ?string $file = null,
         ?int $line = null
     ): void {
-        if (! is_file($this->debugFile)) {
-            $this->initialize();
-        }
+        // debug_print_backtrace();
+        // exit;
+
+        $this->initialize();
 
         [$file, $line] = $this->resolveCaller($file, $line);
         $row = $this->buildRow($message, $type, $file, $line);
 
-        $contents = file_get_contents($this->debugFile);
-        $contents = str_replace('</tbody>', $row . PHP_EOL . '</tbody>', $contents);
-        file_put_contents($this->debugFile, $contents, LOCK_EX);
+        file_put_contents($this->debugFile, $row, FILE_APPEND | LOCK_EX);
     }
     
     public function reset(): void {
@@ -79,33 +62,19 @@ class Logger {
         return [$file, $line];
     }
 
-    //TODO: look into this
-    // private function resolveCaller(?string $file, ?int $line): array {
-    //     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-
-    //     foreach ($trace as $frame) {
-    //         if (($frame['class'] ?? null) !== self::class) {
-    //             $file ??= isset($frame['file']) ? basename($frame['file']) : 'unknown';
-    //             $line ??= $frame['line'] ?? 0;
-    //             break;
-    //         }
-    //     }
-
-    //     return [$file ?? 'unknown', $line ?? 0];
-    // }
-
     private function buildRow(string $message, ErrorType $type, string $file, int $line): string {
         $timestamp = date('Y-m-d H:i:s');
         $message = htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $file = htmlspecialchars($file, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
         return <<<HTML
-            <tr class="{$type->value}">
-                <td>{$timestamp}</td>
-                <td>{$message}</td>
-                <td>{$file}</td>
-                <td>{$line}</td>
-            </tr>
+
+                        <tr class="{$type->value}">
+                            <td>{$timestamp}</td>
+                            <td>{$message}</td>
+                            <td>{$file}</td>
+                            <td>{$line}</td>
+                        </tr>
         HTML;
     }
 
@@ -119,5 +88,17 @@ class Logger {
 
     public function critical(string $message, ?string $file = null, ?int $line = null): void {
         $this->append($message, ErrorType::Critical, $file, $line);
+    }
+
+    public function getContents(): string {
+        $this->initialize();
+        
+        $contents = file_get_contents($this->debugFile);
+
+        if (false === $contents) {
+            throw new \RuntimeException("Failed to read debug file: {$this->debugFile}");
+        }
+
+        return $contents;
     }
 }

@@ -1,3 +1,3 @@
 <?php
 
-\Stella\Core\ExceptionHandler::register();
+\Stella\Core\Exceptions\Handler::register();

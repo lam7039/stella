@@ -1,6 +1,6 @@
 <?php
 
-namespace Stella\Core;
+namespace Stella\Core\Config;
 
 class DotEnv {
     private static array $items = [];

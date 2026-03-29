@@ -2,7 +2,7 @@
 
 namespace Stella\Providers;
 
-use Stella\Core\Logger;
+use Stella\Core\Logging\Logger;
 use Stella\Core\App;
 
 class LoggerServiceProvider

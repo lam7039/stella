@@ -1,6 +1,6 @@
 <?php
 
-\Stella\Core\DotEnv::load();
+\Stella\Core\Config\DotEnv::load();
 
 $config = [];
 
@@ -12,4 +12,4 @@ foreach ($files as $file) {
     $config[$name] = require $file;
 }
 
-\Stella\Core\Config::load($config);
+\Stella\Core\Config\Config::load($config);

@@ -1,25 +1,37 @@
 <?php
 
-namespace Stella\Core;
+namespace Stella\Core\Exceptions;
 
-class ExceptionHandler {
+use Throwable;
+
+class Handler {
+    private static array $reported = [];
+
     public static function register(): void {
         set_exception_handler([self::class, 'handleException']);
         set_error_handler([self::class, 'handleError']);
         register_shutdown_function([self::class, 'handleShutdown']);
     }
 
-    public static function handleException(\Throwable $e): void {
+    public static function handleException(Throwable $e): void {
+        $key = self::makeKey($e->getMessage(), $e->getFile(), $e->getLine());
+
+        if (isset(self::$reported[$key])) {
+            return;
+        }
+
+        self::$reported[$key] = true;
+
         logger()->critical(
-            $e->getMessage(),
-            $e->getfile(),
+            sprintf('%s: %s', $e::class, $e->getMessage()),
+            $e->getFile(),
             $e->getLine()
         );
 
         http_response_code(500);
 
         if (config('app.debug')) {
-            echo file_get_contents(storage_path('debug.html'));
+            echo logger()->getContents();
             return;
         }
 
@@ -27,6 +39,14 @@ class ExceptionHandler {
     }
 
     public static function handleError(int $severity, string $message, string $file, int $line): bool {
+        $key = self::makeKey($message, $file, $line);
+
+        if (isset(self::$reported[$key])) {
+            return true;
+        }
+
+        self::$reported[$key] = true;
+
         logger()->append(
             $message,
             ErrorType::fromCode(self::mapSeverity($severity)),
@@ -48,12 +68,24 @@ class ExceptionHandler {
         ])) {
             return;
         }
+        
+        $key = self::makeKey($error['message'], $error['file'], $error['line']);
+
+        if (isset(self::$reported[$key])) {
+            return;
+        }
+
+        self::$reported[$key] = true;
 
         logger()->critical(
             $error['message'],
             $error['file'],
             $error['line']
         );
+    }
+
+    private static function makeKey(string $message, string $file, int $line): string {
+        return md5($message . $file . $line);
     }
 
     private static function mapSeverity(int $severity): int {

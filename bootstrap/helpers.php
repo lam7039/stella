@@ -1,9 +1,9 @@
 <?php
 
 use Stella\Core\App;
-use Stella\Core\DotEnv;
-use Stella\Core\Config;
-use Stella\Core\Logger;
+use Stella\Core\Config\DotEnv;
+use Stella\Core\Config\Config;
+use Stella\Core\Logging\Logger;
 use Stella\Support\Str;
 use Stella\Support\Collection;
 

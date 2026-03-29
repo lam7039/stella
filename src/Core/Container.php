@@ -2,6 +2,8 @@
 
 namespace Stella\Core;
 
+use Stella\Core\Exceptions\ContainerException;
+
 use ReflectionClass;
 use ReflectionIntersectionType;
 use ReflectionMethod;
