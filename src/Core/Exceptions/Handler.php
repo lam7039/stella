@@ -2,6 +2,7 @@
 
 namespace Stella\Core\Exceptions;
 
+use Stella\Core\Logging\ErrorType;
 use Throwable;
 
 class Handler {
