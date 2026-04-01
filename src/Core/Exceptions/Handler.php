@@ -6,8 +6,6 @@ use Stella\Core\Logging\ErrorType;
 use Throwable;
 
 class Handler {
-    private static array $reported = [];
-
     public static function register(): void {
         set_exception_handler([self::class, 'handleException']);
         set_error_handler([self::class, 'handleError']);

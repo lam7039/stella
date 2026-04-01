@@ -4,6 +4,7 @@ use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Logging\Logger;
+use Stella\Core\Storage\Storage;
 use Stella\Support\Str;
 use Stella\Support\Collection;
 
@@ -87,6 +88,16 @@ if (! function_exists('app')) {
 if (! function_exists('logger')) {
     function logger(): Logger {
         return app()->get(Logger::class);
+    }
+}
+
+if (! function_exists('storage')) {
+    function storage(?string $disk = null): StorageManager|StorageInterface {
+        $manager = app()->get(StorageManager::class, config('storage'));
+
+        return $disk
+            ? $manager->disk($disk)
+            : $manager;
     }
 }
 

@@ -4,5 +4,7 @@
             "Stella\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "league/flysystem": "^3.0"
+    }
 }
