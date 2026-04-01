@@ -7,6 +7,7 @@ use Stella\Core\Logging\Logger;
 use Stella\Core\Storage\Storage;
 use Stella\Support\Str;
 use Stella\Support\Collection;
+use Stella\Support\File;
 
 if (! function_exists('str')) {
     function str(string $value = ''): Str {
@@ -88,6 +89,12 @@ if (! function_exists('app')) {
 if (! function_exists('logger')) {
     function logger(): Logger {
         return app()->get(Logger::class);
+    }
+}
+
+if (! function_exists('file')) {
+    function file(string $path): File {
+        return new File($path);
     }
 }
 
