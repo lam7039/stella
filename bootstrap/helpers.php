@@ -100,7 +100,7 @@ if (! function_exists('file')) {
 
 if (! function_exists('storage')) {
     function storage(?string $disk = null): StorageManager|StorageInterface {
-        $manager = app()->get(StorageManager::class, config('storage'));
+        $manager = app()->get(StorageManager::class);
 
         return $disk
             ? $manager->disk($disk)
