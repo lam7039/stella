@@ -10,7 +10,8 @@ use Stella\Support\Traits\Str\{
     FormatTrait,
     MutateTrait,
     ValidationTrait,
-    UtilTrait
+    EscapeTrait,
+    UtilTrait,
 };
 
 final class Str {
@@ -21,6 +22,7 @@ final class Str {
     use FormatTrait;
     use MutateTrait;
     use ValidationTrait;
+    use EscapeTrait;
     use UtilTrait;
 
     public function __construct(private readonly string $value = '') {}

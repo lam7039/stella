@@ -64,8 +64,8 @@ class Logger {
 
     private function buildRow(string $message, ErrorType $type, string $file, int $line): string {
         $timestamp = date('Y-m-d H:i:s');
-        $message = htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $file = htmlspecialchars($file, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $message = str($message)->html()->value();
+        $file = str($file)->html()->value();
 
         return <<<HTML
 

@@ -16,4 +16,4 @@ throw new Exception('This is a test exception to verify the logger and exception
 dd(config('app.name'));
 
 
-//$app->handleRequest(Request::capture());
+//app()->handleRequest(Request::capture());

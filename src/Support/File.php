@@ -2,12 +2,14 @@
 
 namespace Stella\Support;
 
-use Stella\Support\Traits\File\FileTrait;
-use Stella\Support\Traits\File\DirectoryTrait;
-use Stella\Support\Traits\File\AccessTrait;
-use Stella\Support\Traits\File\ReadTrait;
-use Stella\Support\Traits\File\WriteTrait;
-use Stella\Support\Traits\File\OperationTrait;
+use Stella\Support\Traits\File\{
+    FileTrait,
+    DirectoryTrait,
+    AccessTrait,
+    ReadTrait,
+    WriteTrait,
+    OperationTrait,
+};
 
 class File {
     use FileTrait;
