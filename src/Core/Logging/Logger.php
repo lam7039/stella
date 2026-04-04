@@ -2,29 +2,30 @@
 
 namespace Stella\Core\Logging;
 
+use Stella\Support\File;
+
 class Logger {
-    private readonly string $debugFile;
-    private readonly string $templateFile;
+    private readonly File $debugFile;
+    private readonly File $templateFile;
 
     public function __construct(?string $debugFile = null, ?string $templateFile = null) {
-        $this->debugFile = storage_path($debugFile ?? 'debug.html');
-        $this->templateFile = public_path($templateFile ?? 'templates/debug.html');
+        $this->debugFile = file_object(storage_path($debugFile ?? 'logs/debug.html'));
+        $this->templateFile = file_object(public_path($templateFile ?? 'templates/debug.html'));
+
+        File::mkdir(__DIR__ . '/../../../storage/logs');
     }
 
     private function initialize(): void {
-        if (is_file($this->debugFile)) {
+        if ($this->debugFile->exists()) {
             return;
         }
 
-        if (! is_file($this->templateFile)) {
-            throw new \RuntimeException("Template file missing: {$this->templateFile}");
+        if (! $this->templateFile->exists()) {
+            throw new \RuntimeException("Template file missing: {$this->templateFile->path()}");
         }
 
-        if (
-            ! copy($this->templateFile, $this->debugFile) &&
-            ! is_file($this->debugFile)
-        ) {
-            throw new \RuntimeException("Failed to create debug file: {$this->debugFile}");
+        if (! $this->templateFile->copy($this->debugFile->path())) {
+            throw new \RuntimeException("Failed to create debug file: {$this->debugFile->path()}");
         }
     }
 
@@ -42,15 +43,13 @@ class Logger {
         [$file, $line] = $this->resolveCaller($file, $line);
         $row = $this->buildRow($message, $type, $file, $line);
 
-        file_put_contents($this->debugFile, $row, FILE_APPEND | LOCK_EX);
+        $this->debugFile->append($row);
     }
     
     public function reset(): void {
-        if (is_file($this->debugFile)) {
-            unlink($this->debugFile);
+        if ($this->debugFile->remove()) {
+            $this->initialize();
         }
-
-        $this->initialize();
     }
 
     private function resolveCaller(?string $file, ?int $line): array {
@@ -92,13 +91,7 @@ class Logger {
 
     public function getContents(): string {
         $this->initialize();
-        
-        $contents = file_get_contents($this->debugFile);
 
-        if (false === $contents) {
-            throw new \RuntimeException("Failed to read debug file: {$this->debugFile}");
-        }
-
-        return $contents;
+        return $this->debugFile->contents();
     }
 }
