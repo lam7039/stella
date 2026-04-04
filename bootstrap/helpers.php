@@ -92,9 +92,9 @@ if (! function_exists('logger')) {
     }
 }
 
-if (! function_exists('file')) {
-    function file(string $path): File {
-        return new File($path);
+if (! function_exists('file_object')) {
+    function file_object(string $path): File {
+        return File::of($path);
     }
 }
 
