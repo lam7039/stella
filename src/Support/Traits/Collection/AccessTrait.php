@@ -8,11 +8,11 @@ trait AccessTrait {
     }
 
     public function first(): mixed {
-        return reset($this->items) ?: null; //TODO: php8.5 introduces `array_first` function that can be used here
+        return reset($this->items) ?: null; //TODO: php 8.5 introduces `array_first` function that can be used here
     }
 
     public function last(): mixed {
-        return end($this->items) ?: null; //TODO: php8.5 introduces `array_last` function that can be used here
+        return end($this->items) ?: null; //TODO: php 8.5 introduces `array_last` function that can be used here
     }
 
     public function contains(mixed $item): bool {

@@ -25,12 +25,12 @@ final class Str {
 
     public function __construct(private readonly string $value = '') {}
 
-    protected function with(string $value): self {
-        return self::of($value);
-    }
-
     public static function of(string $value): self {
         return new self($value);
+    }
+
+    protected function with(string $value): self {
+        return self::of($value);
     }
 
     public function value(): string {
