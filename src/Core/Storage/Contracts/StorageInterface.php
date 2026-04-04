@@ -1,5 +1,7 @@
 <?php
 
+namespace Stella\Core\Storage\Contracts;
+
 interface StorageInterface {
     public function put(string $path, string $contents): bool;
     public function get(string $path): ?string;

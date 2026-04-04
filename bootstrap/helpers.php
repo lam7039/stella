@@ -4,7 +4,7 @@ use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Logging\Logger;
-use Stella\Core\Storage\Storage;
+use Stella\Core\Storage\StorageManager;
 use Stella\Support\Str;
 use Stella\Support\Collection;
 use Stella\Support\File;

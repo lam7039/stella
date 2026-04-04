@@ -5,8 +5,6 @@ namespace Stella\Support\Traits\File;
 trait OperationTrait {
     use FileTrait;
 
-    // File Operations
-
     public function copy(string $destination): self {
         if (! is_file($this->path())) {
             throw new \RuntimeException("File not found: {$this->path()}");

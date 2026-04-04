@@ -9,10 +9,10 @@ class Logger {
     private readonly File $templateFile;
 
     public function __construct(?string $debugFile = null, ?string $templateFile = null) {
+        File::mkdir(storage_path('logs'));
+
         $this->debugFile = file_object(storage_path($debugFile ?? 'logs/debug.html'));
         $this->templateFile = file_object(public_path($templateFile ?? 'templates/debug.html'));
-
-        File::mkdir(__DIR__ . '/../../../storage/logs');
     }
 
     private function initialize(): void {
@@ -35,6 +35,7 @@ class Logger {
         ?string $file = null,
         ?int $line = null
     ): void {
+        //TODO: improve resolveCaller
         // debug_print_backtrace();
         // exit;
 

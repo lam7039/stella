@@ -21,6 +21,7 @@ class StorageManager {
         }
 
         return $this->disks[$name] = StorageFactory::make(
+            $name,
             $this->config['disks'][$name]
         );
     }
