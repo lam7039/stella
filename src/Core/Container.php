@@ -33,7 +33,7 @@ class Container {
         if (! $concrete) {
             $concrete = $identifier;
         }
-        $this->instances[$identifier] = is_callable($concrete) ? $concrete() : $concrete;
+        $this->instances[$identifier] = $concrete;
     }
 
     public function get(string $identifier, array $parameters = []): object {

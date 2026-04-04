@@ -5,7 +5,7 @@ namespace Stella\Core\Storage;
 use Stella\Core\Storage\Contracts\StorageInterface;
 
 class StorageManager {
-    private $disks = [];
+    private array $disks = [];
 
     public function __construct(private array $config) {}
 
