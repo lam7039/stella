@@ -4,6 +4,7 @@ use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Logging\Logger;
+use Stella\Core\Logging\ErrorType;
 use Stella\Core\Storage\StorageManager;
 use Stella\Core\Storage\Contracts\StorageInterface;
 use Stella\Support\Str;
@@ -131,7 +132,7 @@ if (! function_exists('output')) {
         $timestamp = date('Y-m-d H:i:s', time());
         $route = explode('/', $file);
         $file = array_pop($route);
-        $error_type = get_error_type($param->getCode());
+        $error_type = ErrorType::fromCode($param->getCode());
 
         //TODO: collapsible trace
         $table = '<tr class="' . $error_type->value . '">

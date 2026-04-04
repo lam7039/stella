@@ -31,7 +31,7 @@ trait CastTrait {
 
     public function fromBase64(bool $strict = true): string {
         if (! $decoded = base64_decode($this->value(), $strict)) {
-            throw new Exception; //TODO: Base64DecodeException;
+            throw new \Exception; //TODO: Base64DecodeException;
         }
 
         return $decoded;
