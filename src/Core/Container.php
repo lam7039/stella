@@ -13,6 +13,8 @@ use ReflectionUnionType;
 
 //TODO: make container work for all functions, not just the constructor (https://chatgpt.com/c/69d2de6d-11f8-8331-b832-86d141a10e13)
 class Container {
+    private array $instances = [];
+
     public function __construct(private array $bindings = []) {
         foreach ($this->bindings as $key => $concrete) {
             if (is_string($concrete) && ! class_exists($concrete)) {
@@ -30,16 +32,34 @@ class Container {
         $this->bindings[$abstract] = $concrete ?? $abstract;
     }
 
+    public function singleton(string $abstract, callable|string|null $concrete = null): void {
+        $this->bind($abstract, $concrete);
+        $this->instances[$abstract] = null;
+    }
+
     public function has(string $abstract): bool {
         return isset($this->bindings[$abstract]);
     }
 
     public function get(string $abstract, array $parameters = []): object {
+        if (
+            array_key_exists($abstract, $this->instances) &&
+            $this->instances[$abstract] !== null
+        ) {
+            return $this->instances[$abstract];
+        }
+
         if (! $this->has($abstract)) {
             throw ContainerException::ClassNotFound($abstract);
         }
 
-        return $this->resolve($this->bindings[$abstract], $parameters);
+        $object = $this->resolve($this->bindings[$abstract], $parameters);
+
+        if (array_key_exists($abstract, $this->instances)) {
+            $this->instances[$abstract] = $object;
+        }
+
+        return $object;
     }
 
     public function call(object|string|array $target, ?string $method = null, array $parameters = []): mixed {
@@ -84,11 +104,6 @@ class Container {
         if (! $reflection->isInstantiable()) {
             throw ContainerException::InvalidInstance($concrete);
         }
-
-        //TODO: make instanced classes fetchable from instances so it won't have to re-instance over and over again
-        // if ($this->has($abstract)) {
-        //     return $this->get($abstract, $parameters);
-        // }
 
         $constructor = $reflection->getConstructor();
         if (! $constructor) {

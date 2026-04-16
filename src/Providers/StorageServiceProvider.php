@@ -9,7 +9,7 @@ class StorageServiceProvider
 {
     public function register(App $app): void
     {
-        $app->bind(StorageManager::class, function() {
+        $app->singleton(StorageManager::class, function() {
             return new StorageManager(config('storage'));
         });
     }
