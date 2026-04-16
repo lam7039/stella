@@ -3,15 +3,15 @@
 namespace Stella\Core\Config;
 
 class Config {
-    private static array $items = [];
+    private array $items = [];
 
-    public static function load(array $config): void {
-        self::$items = $config;
+    public function load(array $config): void {
+        $this->items = $config;
     }
 
-    public static function get(string $key, mixed $default = null): mixed {
+    public function get(string $key, mixed $default = null): mixed {
         $keys = explode('.', $key);
-        $value = self::$items;
+        $value = $this->items;
 
         foreach ($keys as $k) {
             if (! isset($value[$k])) {
@@ -24,9 +24,9 @@ class Config {
         return $value;
     }
     
-    public static function has(string $key): bool {
+    public function has(string $key): bool {
         $keys = explode('.', $key);
-        $value = self::$items;
+        $value = $this->items;
 
         foreach ($keys as $k) {
             if (! isset($value[$k])) {

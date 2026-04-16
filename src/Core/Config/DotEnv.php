@@ -3,9 +3,9 @@
 namespace Stella\Core\Config;
 
 class DotEnv {
-    private static array $items = [];
+    private array $items = [];
 
-    public static function load(?string $path = null): void {
+    public function load(?string $path = null): void {
         $path ??= env_path();
 
         if (! file_exists($path)) {
@@ -32,21 +32,21 @@ class DotEnv {
             $value = trim($value);
             $value = trim($value, '"\'');
 
-            self::$items[$key] = $value;
+            $this->items[$key] = $value;
             $_ENV[$key] = $value;
         }
     }
 
-    public static function get(string $key, mixed $default = null): mixed {
-        $value = self::$items[$key] ?? $_ENV[$key] ?? $default;
-        return self::cast($value);
+    public function get(string $key, mixed $default = null): mixed {
+        $value = $this->items[$key] ?? $_ENV[$key] ?? $default;
+        return $this->cast($value);
     }
 
-    public static function has(string $key): bool {
-        return isset(self::$items[$key]) || isset($_ENV[$key]);
+    public function has(string $key): bool {
+        return isset($this->items[$key]) || isset($_ENV[$key]);
     }
 
-    private static function cast(mixed $value) {
+    private function cast(mixed $value) {
         if (! is_string($value)) {
             return $value;
         }

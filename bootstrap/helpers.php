@@ -70,15 +70,21 @@ if (! function_exists('env_path')) {
     }
 }
 
+if (! function_exists('app')) {
+    function app(): App {
+        return App::instance();
+    }
+}
+
 if (! function_exists('env')) {
     function env(string $key, mixed $default = null): mixed {
-        return DotEnv::get($key, $default);
+        return app()->get(DotEnv::class)->get($key, $default);
     }
 }
 
 if (! function_exists('config')) {
     function config(string $key, mixed $default = null): mixed {
-        return Config::get($key, $default);
+        return app()->get(Config::class)->get($key, $default);
     }
 }
 
