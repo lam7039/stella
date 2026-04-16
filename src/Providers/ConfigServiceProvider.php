@@ -8,13 +8,14 @@ use Stella\Core\Config\DotEnv;
 
 class ConfigServiceProvider
 {
-    public function register(App $app): void
+    public function register(App $app): void 
     {
-        $app->singleton(DotEnv::class, DotEnv::class);
-        $app->singleton(Config::class, Config::class);
+        $app->singleton(DotEnv::class);
+        $app->singleton(Config::class);
     }
 
-    public function boot(App $app): void {
+    public function boot(App $app): void
+    {
         $app->get(DotEnv::class)->load();
 
         $config = [];
