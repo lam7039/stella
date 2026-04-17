@@ -2,18 +2,18 @@
 
 namespace Stella\Providers;
 
-use Stella\Core\App;
+use Stella\Core\Container;
 use Stella\Core\Exceptions\Handler;
 
 class ExceptionServiceProvider
 {
-    public function register(App $app): void 
+    public function register(Container $container): void 
     {
-        $app->singleton(Handler::class);
+        $container->singleton(Handler::class);
     }
 
-    public function boot(App $app): void
+    public function boot(Container $container): void
     {
-        $app->get(Handler::class)->register();
+        $container->get(Handler::class)->register();
     }
 }

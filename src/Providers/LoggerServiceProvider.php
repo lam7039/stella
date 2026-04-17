@@ -2,17 +2,18 @@
 
 namespace Stella\Providers;
 
-use Stella\Core\App;
+use Stella\Core\Container;
 use Stella\Core\Logging\Logger;
 
-class LoggerServiceProvider {
-    public function register(App $app): void
+class LoggerServiceProvider
+{
+    public function register(Container $container): void
     {
-        $app->singleton(Logger::class);
+        $container->singleton(Logger::class);
     }
 
-    public function boot(App $app): void
+    public function boot(Container $container): void
     {
-        $app->get(Logger::class)->reset();
+        $container->get(Logger::class)->reset();
     }
 }

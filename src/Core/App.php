@@ -4,7 +4,7 @@ namespace Stella\Core;
 
 class App extends Container {
     private static ?self $instance = null;
-    private array $providers = [];
+    private array $serviceProviders = [];
 
     public static function instance(): self {
         return self::$instance ?? throw new \RuntimeException("App not initialized");
@@ -14,21 +14,21 @@ class App extends Container {
         self::$instance = $this;
     }
 
-    public function register(string $providerClass): void {
-        $provider = new $providerClass();
+    public function register(string $serviceProviderClass): void {
+        $serviceProvider = new $serviceProviderClass();
 
-        if (! method_exists($provider, 'register')) {
-            throw new \RuntimeException("Service provider must have a register method: {$providerClass}");
+        if (! method_exists($serviceProvider, 'register')) {
+            throw new \RuntimeException("Service provider must have a register method: {$serviceProviderClass}");
         }
 
-        $provider->register($this);
-        $this->providers[] = $provider;
+        $serviceProvider->register($this);
+        $this->serviceProviders[] = $serviceProvider;
     }
 
     public function boot(): void {
-        foreach ($this->providers as $provider) {
-            if (method_exists($provider, 'boot')) {
-                $provider->boot($this);
+        foreach ($this->serviceProviders as $serviceProvider) {
+            if (method_exists($serviceProvider, 'boot')) {
+                $serviceProvider->boot($this);
             }
         }
     }

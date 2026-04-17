@@ -2,21 +2,21 @@
 
 namespace Stella\Providers;
 
-use Stella\Core\App;
+use Stella\Core\Container;
 use Stella\Core\Config\Config;
 use Stella\Core\Config\DotEnv;
 
 class ConfigServiceProvider
 {
-    public function register(App $app): void 
+    public function register(Container $container): void 
     {
-        $app->singleton(DotEnv::class);
-        $app->singleton(Config::class);
+        $container->singleton(DotEnv::class);
+        $container->singleton(Config::class);
     }
 
-    public function boot(App $app): void
+    public function boot(Container $container): void
     {
-        $app->get(DotEnv::class)->load();
+        $container->get(DotEnv::class)->load();
 
         $config = [];
 
@@ -28,6 +28,6 @@ class ConfigServiceProvider
             $config[$name] = require $file;
         }
 
-        $app->get(Config::class)->load($config);
+        $container->get(Config::class)->load($config);
     }
 }

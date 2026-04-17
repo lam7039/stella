@@ -2,14 +2,14 @@
 
 namespace Stella\Providers;
 
-use Stella\Core\App;
+use Stella\Core\Container;
 use Stella\Core\Storage\StorageManager;
 
 class StorageServiceProvider
 {
-    public function register(App $app): void
+    public function register(Container $container): void
     {
-        $app->singleton(StorageManager::class, function() {
+        $container->singleton(StorageManager::class, function() {
             return new StorageManager(config('storage'));
         });
     }
