@@ -12,10 +12,12 @@ use ReflectionParameter;
 use ReflectionUnionType;
 
 //TODO: make container work for all functions, not just the constructor (https://chatgpt.com/c/69d2de6d-11f8-8331-b832-86d141a10e13)
-class Container {
+class Container
+{
     private array $instances = [];
 
-    public function __construct(private array $bindings = []) {
+    public function __construct(private array $bindings = [])
+    {
         foreach ($this->bindings as $key => $concrete) {
             if (is_string($concrete) && ! class_exists($concrete)) {
                 throw ContainerException::InstanceNotFound($concrete);
@@ -28,20 +30,24 @@ class Container {
         }
     }
 
-    public function bind(string $abstract, callable|string|null $concrete = null): void {
+    public function bind(string $abstract, callable|string|null $concrete = null): void
+    {
         $this->bindings[$abstract] = $concrete ?? $abstract;
     }
 
-    public function singleton(string $abstract, callable|string|null $concrete = null): void {
+    public function singleton(string $abstract, callable|string|null $concrete = null): void
+    {
         $this->bind($abstract, $concrete);
         $this->instances[$abstract] = null;
     }
 
-    public function has(string $abstract): bool {
+    public function has(string $abstract): bool
+    {
         return isset($this->bindings[$abstract]);
     }
 
-    public function get(string $abstract, array $parameters = []): object {
+    public function get(string $abstract, array $parameters = []): object
+    {
         if (
             array_key_exists($abstract, $this->instances) &&
             $this->instances[$abstract] !== null
@@ -62,7 +68,8 @@ class Container {
         return $object;
     }
 
-    public function call(object|string|array $target, ?string $method = null, array $parameters = []): mixed {
+    public function call(object|string|array $target, ?string $method = null, array $parameters = []): mixed
+    {
         if (is_array($target)) {
             [$target, $method] = $target;
         }
@@ -82,11 +89,13 @@ class Container {
     }
 
     // //TODO: unused for now, vstream used it in the router class with the name get_method_params
-    // public function getMethodParams(string $class, string $method): array {
+    // public function getMethodParams(string $class, string $method): array
+    // {
     //     return array_column($this->reflectedParameters($class, $method), 'name');
     // }
 
-    // private function reflectedParameters(string $class, string $method): array {
+    // private function reflectedParameters(string $class, string $method): array
+    // {
     //     if (! method_exists($class, $method)) {
     //         throw ContainerException::MethodNotFound($method);
     //     }
@@ -95,7 +104,8 @@ class Container {
     //     return $reflectedMethod->getParameters();
     // }
 
-    private function resolve(mixed $concrete, array $parameters): object {
+    private function resolve(mixed $concrete, array $parameters): object
+    {
         if (is_callable($concrete)) {
             return $concrete($this, $parameters);
         }
@@ -118,14 +128,16 @@ class Container {
         return new $concrete(...$dependencies);
     }
 
-    private function resolveDependencies(array $parameters, array $provided): array {
+    private function resolveDependencies(array $parameters, array $provided): array
+    {
         return array_map(
             fn (ReflectionParameter $parameter) => $this->resolveParameter($parameter, $provided),
             $parameters 
         );
     }
 
-    private function resolveParameter(ReflectionParameter $parameter, array $provided): mixed {
+    private function resolveParameter(ReflectionParameter $parameter, array $provided): mixed
+    {
         $name = $parameter->getName();
         $type = $parameter->getType();
         $class = $parameter->getDeclaringClass()?->name ?? 'unknown';
@@ -147,7 +159,8 @@ class Container {
         };
     }
 
-    private function resolveNamedType(ReflectionNamedType $type, string $name, array $parameters): mixed {
+    private function resolveNamedType(ReflectionNamedType $type, string $name, array $parameters): mixed
+    {
         if ($type->isBuiltin() && array_key_exists($name, $parameters)) {
             return $parameters[$name];
         }
@@ -159,7 +172,8 @@ class Container {
         throw ContainerException::ParameterNotFound($name);
     }
 
-    private function resolveUnionType(ReflectionUnionType $union, string $name, array $parameters): mixed {
+    private function resolveUnionType(ReflectionUnionType $union, string $name, array $parameters): mixed
+    {
         foreach ($union->getTypes() as $type) {
             try {
                 return $this->resolveNamedType($type, $name, $parameters);
@@ -172,7 +186,8 @@ class Container {
     }
 
     // //TODO: test intersection resolve
-    // private function resolveIntersectionType(ReflectionIntersectionType $intersection, string $name, array $parameters): mixed {
+    // private function resolveIntersectionType(ReflectionIntersectionType $intersection, string $name, array $parameters): mixed
+    // {
     //     if (array_key_exists($name, $parameters)) {
     //         return $parameters[$name];
     //     }
@@ -208,35 +223,3 @@ class Container {
     //     throw ContainerException::ParameterNotFound($name);
     // }
 }
-
-/////////////// IMPLEMENTATION EXAMPLE //////////////////
-//
-// interface AbstractTestClass {
-//
-// }
-//
-// class InjectionTestClass implements AbstractTestClass {
-//     public function testOutput() {
-//         echo 'test output';
-//     }
-// }
-//
-// class TestClass {
-//     public function __construct(InjectionTestClass $test) {
-//         $test->testOutput();
-//     }
-//
-//     public function asdf(string $b) {
-//
-//     }
-//
-// }
-//
-// $container = new container([
-//     InjectionTestClass::class => InjectionTestClass::class,
-//     'test' => TestClass::class
-// ]);
-//
-// $testClass = $container->get('test');
-//
-/////////////////////////////////////////////////////////
