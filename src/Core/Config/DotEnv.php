@@ -2,10 +2,12 @@
 
 namespace Stella\Core\Config;
 
-class DotEnv {
+class DotEnv
+{
     private array $items = [];
 
-    public function load(?string $path = null): void {
+    public function load(?string $path = null): void
+    {
         $path ??= env_path();
 
         if (! file_exists($path)) {
@@ -37,16 +39,19 @@ class DotEnv {
         }
     }
 
-    public function get(string $key, mixed $default = null): mixed {
+    public function get(string $key, mixed $default = null): mixed
+    {
         $value = $this->items[$key] ?? $_ENV[$key] ?? $default;
         return $this->cast($value);
     }
 
-    public function has(string $key): bool {
+    public function has(string $key): bool
+    {
         return isset($this->items[$key]) || isset($_ENV[$key]);
     }
 
-    private function cast(mixed $value) {
+    private function cast(mixed $value): mixed
+    {
         if (! is_string($value)) {
             return $value;
         }

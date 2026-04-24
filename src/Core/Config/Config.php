@@ -2,14 +2,17 @@
 
 namespace Stella\Core\Config;
 
-class Config {
+class Config
+{
     private array $items = [];
 
-    public function load(array $config): void {
+    public function load(array $config): void
+    {
         $this->items = $config;
     }
 
-    public function get(string $key, mixed $default = null): mixed {
+    public function get(string $key, mixed $default = null): mixed
+    {
         $keys = explode('.', $key);
         $value = $this->items;
 
@@ -24,7 +27,8 @@ class Config {
         return $value;
     }
     
-    public function has(string $key): bool {
+    public function has(string $key): bool
+    {
         $keys = explode('.', $key);
         $value = $this->items;
 
