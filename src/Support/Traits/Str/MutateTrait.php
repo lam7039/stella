@@ -2,22 +2,27 @@
 
 namespace Stella\Support\Traits\Str;
 
-trait MutateTrait {
+trait MutateTrait
+{
     use StringTrait;
 
-    public function replace(string|array $search, string $replace): self {
+    public function replace(string|array $search, string $replace): self
+    {
         return $this->with(str_replace($search, $replace, $this->value()));
     }
 
-    public function remove(string|array $search): self {
+    public function remove(string|array $search): self
+    {
         return $this->with($this->replace($search, '')->value());
     }
 
-    public function prepend(string $value): self {
+    public function prepend(string $value): self
+    {
         return $this->with($value . $this->value());
     }
 
-    public function append(string $value): self {
+    public function append(string $value): self
+    {
         return $this->with($this->value() . $value);
     }
 }

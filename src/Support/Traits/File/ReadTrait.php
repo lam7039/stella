@@ -4,10 +4,12 @@ namespace Stella\Support\Traits\File;
 
 use Generator;
 
-trait ReadTrait {
+trait ReadTrait
+{
     use FileTrait;
 
-    public function contents(): string {
+    public function contents(): string
+    {
         if (! is_file($this->path())) {
             throw new \RuntimeException("File not found: {$this->path()}");
         }
@@ -21,7 +23,8 @@ trait ReadTrait {
         return $contents;
     }
 
-    public function readLines(): Generator {
+    public function readLines(): Generator
+    {
         $file = fopen($this->path(), 'r');
 
         if ($file === false) {

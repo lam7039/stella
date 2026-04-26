@@ -2,28 +2,33 @@
 
 namespace Stella\Support\Traits\Str;
 
-trait FormatTrait {
+trait FormatTrait
+{
     use StringTrait;
-    
-    public function camel(): self {
+
+    public function camel(): self
+    {
         $value = preg_replace('/[\s\-_]+/', ' ', $this->value());
         $value = mb_convert_case($value, MB_CASE_TITLE);
         $value = str_replace(' ', '', $value);
         return $this->with(mb_lcfirst($value));
     }
 
-    public function pascal(): self {
+    public function pascal(): self
+    {
         return $this->with(mb_ucfirst($this->camel()->value()));
     }
 
-    public function snake(): self {
+    public function snake(): self
+    {
         $value = preg_replace('/[A-Z]/', '_$0', $this->value());
         $value = mb_strtolower(trim($value, '_'));
         $value = str_replace(' ', '_', $value);
         return $this->with($value);
     }
 
-    public function slug(): self {
+    public function slug(): self
+    {
         $value = preg_replace('/[^A-Za-z0-9]+/', '-', $this->value());
         $value = mb_strtolower(trim($value, '-'));
         return $this->with($value);

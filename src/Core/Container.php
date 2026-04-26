@@ -124,15 +124,15 @@ class Container
             $constructor->getParameters(),
             $parameters
         );
-        
+
         return new $concrete(...$dependencies);
     }
 
     private function resolveDependencies(array $parameters, array $provided): array
     {
         return array_map(
-            fn (ReflectionParameter $parameter) => $this->resolveParameter($parameter, $provided),
-            $parameters 
+            fn(ReflectionParameter $parameter) => $this->resolveParameter($parameter, $provided),
+            $parameters
         );
     }
 
@@ -200,7 +200,7 @@ class Container
     //         }
 
     //         $reflection = new ReflectionClass($concrete);
-            
+
     //         foreach ($types as $type) {
     //             $typeName = $type->getName();
 
@@ -216,7 +216,7 @@ class Container
     //                 continue 2;
     //             }
     //         }
-                
+
     //         return $this->get($abstract, $parameters);
     //     }
 

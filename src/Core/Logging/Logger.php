@@ -4,18 +4,21 @@ namespace Stella\Core\Logging;
 
 use Stella\Support\File;
 
-class Logger {
+class Logger
+{
     private readonly File $debugFile;
     private readonly File $templateFile;
 
-    public function __construct(?string $debugFile = null, ?string $templateFile = null) {
+    public function __construct(?string $debugFile = null, ?string $templateFile = null)
+    {
         File::mkdir(storage_path('logs'));
 
         $this->debugFile = file_object(storage_path($debugFile ?? 'logs/debug.html'));
         $this->templateFile = file_object(public_path($templateFile ?? 'templates/debug.html'));
     }
 
-    private function initialize(): void {
+    private function initialize(): void
+    {
         if ($this->debugFile->exists()) {
             return;
         }
@@ -46,14 +49,16 @@ class Logger {
 
         $this->debugFile->append($row);
     }
-    
-    public function reset(): void {
+
+    public function reset(): void
+    {
         if ($this->debugFile->remove()) {
             $this->initialize();
         }
     }
 
-    private function resolveCaller(?string $file, ?int $line): array {
+    private function resolveCaller(?string $file, ?int $line): array
+    {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)[2] ?? [];
 
         $file ??= isset($trace['file']) ? basename($trace['file']) : 'unknown';
@@ -62,7 +67,8 @@ class Logger {
         return [$file, $line];
     }
 
-    private function buildRow(string $message, ErrorType $type, string $file, int $line): string {
+    private function buildRow(string $message, ErrorType $type, string $file, int $line): string
+    {
         $timestamp = date('Y-m-d H:i:s');
         $message = str($message)->html()->value();
         $file = str($file)->html()->value();
@@ -78,19 +84,23 @@ class Logger {
         HTML;
     }
 
-    public function info(string $message, ?string $file = null, ?int $line = null): void {
+    public function info(string $message, ?string $file = null, ?int $line = null): void
+    {
         $this->append($message, ErrorType::Info, $file, $line);
     }
 
-    public function warning(string $message, ?string $file = null, ?int $line = null): void {
+    public function warning(string $message, ?string $file = null, ?int $line = null): void
+    {
         $this->append($message, ErrorType::Warning, $file, $line);
     }
 
-    public function critical(string $message, ?string $file = null, ?int $line = null): void {
+    public function critical(string $message, ?string $file = null, ?int $line = null): void
+    {
         $this->append($message, ErrorType::Critical, $file, $line);
     }
 
-    public function getContents(): string {
+    public function getContents(): string
+    {
         $this->initialize();
 
         return $this->debugFile->contents();

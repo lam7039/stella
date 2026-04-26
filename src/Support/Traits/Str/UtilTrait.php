@@ -2,18 +2,22 @@
 
 namespace Stella\Support\Traits\Str;
 
-trait UtilTrait {
+trait UtilTrait
+{
     use StringTrait;
 
-    public function length(): int {
+    public function length(): int
+    {
         return mb_strlen($this->value());
     }
 
-    public function repeat(int $times): self {
+    public function repeat(int $times): self
+    {
         return $this->with(str_repeat($this->value(), $times));
     }
 
-    public function limit(int $limit, string $end = '...'): self {
+    public function limit(int $limit, string $end = '...'): self
+    {
         if ($this->length() > $limit) {
             return $this->with(mb_substr($this->value(), 0, $limit) . $end);
         }

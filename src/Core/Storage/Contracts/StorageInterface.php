@@ -2,7 +2,8 @@
 
 namespace Stella\Core\Storage\Contracts;
 
-interface StorageInterface {
+interface StorageInterface
+{
     public function put(string $path, string $contents): bool;
     public function get(string $path): ?string;
     public function delete(string $path): bool;

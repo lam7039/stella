@@ -11,7 +11,8 @@ use Stella\Support\Traits\File\{
     OperationTrait,
 };
 
-class File {
+class File
+{
     use FileTrait;
     use DirectoryTrait;
     use AccessTrait;
@@ -21,19 +22,23 @@ class File {
 
     public function __construct(private readonly string $path) {}
 
-    public static function of(string $path): self {
+    public static function of(string $path): self
+    {
         return new self($path);
     }
 
-    public function with(string $path): self {
+    public function with(string $path): self
+    {
         return self::of($path);
     }
 
-    public function path(): string {
+    public function path(): string
+    {
         return $this->path;
     }
 
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->path();
     }
 }

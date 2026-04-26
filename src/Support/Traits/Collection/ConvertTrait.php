@@ -2,12 +2,15 @@
 
 namespace Stella\Support\Traits\Collection;
 
-trait ConvertTrait {
-    public function toArray(): array {
+trait ConvertTrait
+{
+    public function toArray(): array
+    {
         return $this->items;
     }
 
-    public function toJson(): string {
+    public function toJson(): string
+    {
         return json_encode($this->items);
     }
 }

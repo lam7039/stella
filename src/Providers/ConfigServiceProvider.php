@@ -8,7 +8,7 @@ use Stella\Core\Config\DotEnv;
 
 class ConfigServiceProvider
 {
-    public function register(Container $container): void 
+    public function register(Container $container): void
     {
         $container->singleton(DotEnv::class);
         $container->singleton(Config::class);

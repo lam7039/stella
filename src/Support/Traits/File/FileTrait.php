@@ -2,7 +2,8 @@
 
 namespace Stella\Support\Traits\File;
 
-trait FileTrait {
+trait FileTrait
+{
     abstract public function with(string $path): self;
     abstract public function path(): string;
 }

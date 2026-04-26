@@ -7,7 +7,7 @@ use Stella\Core\Exceptions\Handler;
 
 class ExceptionServiceProvider
 {
-    public function register(Container $container): void 
+    public function register(Container $container): void
     {
         $container->singleton(Handler::class);
     }

@@ -2,18 +2,22 @@
 
 namespace Stella\Support\Traits\File;
 
-trait AccessTrait {
+trait AccessTrait
+{
     use FileTrait;
 
-    public function size(): int {
+    public function size(): int
+    {
         return filesize($this->path());
     }
 
-    public function exists(): bool {
+    public function exists(): bool
+    {
         return is_file($this->path());
     }
 
-    public function lastModified(): int {
+    public function lastModified(): int
+    {
         if (! $this->exists()) {
             throw new \RuntimeException("File not found: {$this->path()}");
         }
@@ -21,11 +25,12 @@ trait AccessTrait {
         return filemtime($this->path());
     }
 
-    public function hash(string $algorithm = 'sha256'): string {
+    public function hash(string $algorithm = 'sha256'): string
+    {
         if (! $this->exists()) {
             throw new \RuntimeException("File not found: {$this->path()}");
         }
 
-        return hash_file($algorithm, $this->path()); 
+        return hash_file($algorithm, $this->path());
     }
 }

@@ -4,7 +4,8 @@ namespace Stella\Support\Traits\File;
 
 trait DirectoryTrait
 {
-    public static function mkdir(string $path, int $permissions = 0755): void {
+    public static function mkdir(string $path, int $permissions = 0755): void
+    {
         if (is_file($path)) {
             throw new \RuntimeException("Path includes a file: {$path}");
         }

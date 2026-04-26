@@ -11,7 +11,8 @@ use Stella\Support\Traits\Collection\{
     ChunkTrait,
 };
 
-class Collection implements \Countable, \IteratorAggregate {
+class Collection implements \Countable, \IteratorAggregate
+{
     use ConvertTrait;
     use AccessTrait;
     use MutationTrait;
@@ -21,11 +22,13 @@ class Collection implements \Countable, \IteratorAggregate {
 
     public function __construct(private array $items = []) {}
 
-    public function count(): int {
+    public function count(): int
+    {
         return count($this->items);
     }
 
-    public function getIterator(): \Traversable {
+    public function getIterator(): \Traversable
+    {
         return new \ArrayIterator($this->items);
     }
 }

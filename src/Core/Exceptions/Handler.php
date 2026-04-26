@@ -5,14 +5,17 @@ namespace Stella\Core\Exceptions;
 use Stella\Core\Logging\ErrorType;
 use Throwable;
 
-class Handler {
-    public function register(): void {
+class Handler
+{
+    public function register(): void
+    {
         set_exception_handler([$this, 'handleException']);
         set_error_handler([$this, 'handleError']);
         register_shutdown_function([$this, 'handleShutdown']);
     }
 
-    public function handleException(Throwable $e): void {
+    public function handleException(Throwable $e): void
+    {
         logger()->critical(
             sprintf('%s: %s', $e::class, $e->getMessage()),
             $e->getFile(),
@@ -29,7 +32,8 @@ class Handler {
         echo 'Internal Server Error';
     }
 
-    public function handleError(int $severity, string $message, string $file, int $line): bool {
+    public function handleError(int $severity, string $message, string $file, int $line): bool
+    {
         logger()->append(
             $message,
             ErrorType::fromCode($this->mapSeverity($severity)),
@@ -40,7 +44,8 @@ class Handler {
         return true;
     }
 
-    public function handleShutdown(): void {
+    public function handleShutdown(): void
+    {
         $error = error_get_last();
 
         if (! $error || ! in_array($error['type'], [
@@ -59,7 +64,8 @@ class Handler {
         );
     }
 
-    private function mapSeverity(int $severity): int {
+    private function mapSeverity(int $severity): int
+    {
         return match ($severity) {
             E_NOTICE,
             E_USER_NOTICE => 1,

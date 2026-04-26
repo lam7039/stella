@@ -2,10 +2,12 @@
 
 namespace Stella\Support\Traits\File;
 
-trait OperationTrait {
+trait OperationTrait
+{
     use FileTrait;
 
-    public function copy(string $destination): self {
+    public function copy(string $destination): self
+    {
         if (! is_file($this->path())) {
             throw new \RuntimeException("File not found: {$this->path()}");
         }
@@ -21,7 +23,8 @@ trait OperationTrait {
         return $this->with($destination);
     }
 
-    public function move(string $destination): self {
+    public function move(string $destination): self
+    {
         if (! rename($this->path(), $destination)) {
             throw new \RuntimeException("Failed to move file to: {$destination}");
         }
@@ -29,7 +32,8 @@ trait OperationTrait {
         return $this->with($destination);
     }
 
-    public function remove(): bool {
+    public function remove(): bool
+    {
         if (! is_file($this->path())) {
             return false;
         }
