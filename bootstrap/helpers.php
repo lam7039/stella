@@ -12,19 +12,22 @@ use Stella\Support\Collection;
 use Stella\Support\File;
 
 if (! function_exists('str')) {
-    function str(string $value = ''): Str {
+    function str(string $value = ''): Str
+    {
         return Str::of($value);
     }
 }
 
 if (! function_exists('collect')) {
-    function collect(array $items = []): Collection {
+    function collect(array $items = []): Collection
+    {
         return new Collection($items);
     }
 }
 
 if (! function_exists('base_path')) {
-    function base_path(string $path = ''): string {
+    function base_path(string $path = ''): string
+    {
         $base = dirname(__DIR__);
         $path = ltrim($path, '/\\');
 
@@ -35,55 +38,64 @@ if (! function_exists('base_path')) {
 }
 
 if (! function_exists('config_path')) {
-    function config_path(string $path = ''): string {
+    function config_path(string $path = ''): string
+    {
         return base_path('config/' . ltrim($path, '/\\'));
     }
 }
 
 if (! function_exists('public_path')) {
-    function public_path(string $path = ''): string {
+    function public_path(string $path = ''): string
+    {
         return base_path('public/' . ltrim($path, '/\\'));
     }
 }
 
 if (! function_exists('storage_path')) {
-    function storage_path(string $path = ''): string {
+    function storage_path(string $path = ''): string
+    {
         return base_path('storage/' . ltrim($path, '/\\'));
     }
 }
 
 if (! function_exists('src_path')) {
-    function src_path(string $path = ''): string {
+    function src_path(string $path = ''): string
+    {
         return base_path('src/' . ltrim($path, '/\\'));
     }
 }
 
 if (! function_exists('routes_path')) {
-    function routes_path(string $path = ''): string {
+    function routes_path(string $path = ''): string
+    {
         return base_path('routes/' . ltrim($path, '/\\'));
     }
 }
 
 if (! function_exists('env_path')) {
-    function env_path(): string {
+    function env_path(): string
+    {
         return base_path('.env');
     }
 }
 
 if (! function_exists('app')) {
-    function app(): App {
+    function app(): App
+    {
         return App::instance();
     }
 }
 
 if (! function_exists('env')) {
-    function env(string $key, mixed $default = null): mixed {
+    function env(string $key, mixed $default = null): mixed
+    {
         return app()->get(DotEnv::class)->get($key, $default);
     }
 }
 
 if (! function_exists('config')) {
-    function config(string $key, mixed $default = null): mixed {
+    function config(string $key, mixed $default = null): mixed
+    {
         return app()->get(Config::class)->get($key, $default);
     }
 }
@@ -95,19 +107,22 @@ if (! function_exists('app')) {
 }
 
 if (! function_exists('logger')) {
-    function logger(): Logger {
+    function logger(): Logger
+    {
         return app()->get(Logger::class);
     }
 }
 
 if (! function_exists('file_object')) {
-    function file_object(string $path): File {
+    function file_object(string $path): File
+    {
         return File::of($path);
     }
 }
 
 if (! function_exists('storage')) {
-    function storage(?string $disk = null): StorageManager|StorageInterface {
+    function storage(?string $disk = null): StorageManager|StorageInterface
+    {
         $manager = app()->get(StorageManager::class);
 
         return $disk
@@ -117,7 +132,8 @@ if (! function_exists('storage')) {
 }
 
 if (! function_exists('output')) {
-    function output(mixed $param) : void {
+    function output(mixed $param): void
+    {
         if (! $param instanceof \Throwable) {
             //TODO: use unified style with log but without table
             echo '<pre>' . var_export($param, true) . '</pre>';
@@ -172,13 +188,15 @@ if (! function_exists('output')) {
 }
 
 if (! function_exists('dump')) {
-    function dump(mixed ...$params) : void {
+    function dump(mixed ...$params): void
+    {
         array_map(fn(mixed $param) => output(is_string($param) ? htmlspecialchars($param) : $param), $params);
     }
 }
 
 if (! function_exists('dd')) {
-    function dd(mixed ...$params) : never {
+    function dd(mixed ...$params): never
+    {
         dump(...$params);
         exit;
     }
