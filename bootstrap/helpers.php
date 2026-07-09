@@ -5,6 +5,7 @@ use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Logging\Logger;
 use Stella\Core\Logging\ErrorType;
+use Stella\Core\Http\Session;
 use Stella\Core\Storage\StorageManager;
 use Stella\Core\Storage\Contracts\StorageInterface;
 use Stella\Support\Str;
@@ -100,9 +101,52 @@ if (! function_exists('config')) {
     }
 }
 
-if (! function_exists('app')) {
-    function app(): App {
-        return App::instance();
+if (! function_exists('session')) {
+    function session(): Session
+    {
+        return app()->get(Session::class);
+    }
+}
+
+if (! function_exists('session_get')) {
+    function session_get(string $key, mixed $default = null): mixed
+    {
+        return session()->get($key, $default);
+    }
+}
+
+if (! function_exists('session_set')) {
+    function session_set(string $key, mixed $value): void
+    {
+        session()->set($key, $value);
+    }
+}
+
+if (! function_exists('session_has')) {
+    function session_has(string $key): bool
+    {
+        return session()->has($key);
+    }
+}
+
+if (! function_exists('session_forget')) {
+    function session_forget(string $key): void
+    {
+        session()->remove($key);
+    }
+}
+
+if (! function_exists('session_flash')) {
+    function session_flash(string $key, mixed $value): void
+    {
+        session()->flash($key, $value);
+    }
+}
+
+if (! function_exists('session_flash_get')) {
+    function session_flash_get(string $key, mixed $default = null): mixed
+    {
+        return session()->getFlash($key, $default);
     }
 }
 
