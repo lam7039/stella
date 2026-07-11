@@ -3,6 +3,7 @@
 use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
+use Stella\Core\Http\Request;
 use Stella\Core\Logging\Logger;
 use Stella\Core\Logging\ErrorType;
 use Stella\Core\Http\Session;
@@ -157,6 +158,29 @@ if (! function_exists('logger')) {
     }
 }
 
+if (! function_exists('request')) {
+    function request(): Request
+    {
+        return app()->get(Request::class);
+    }
+}
+
+//TODO: create the Response class and use it here
+// if (! function_exists('response')) {
+//     function response(): Response
+//     {
+//         return app()->get(Response::class)
+//     }
+// }
+
+//TODO: create the HttpException class and use it here
+// if (! function_exists('abort')) {
+//     function abort(int $code, string $message = ''): void
+//     {
+//         throw new HttpException($code, $message);
+//     }
+// }
+
 if (! function_exists('file_object')) {
     function file_object(string $path): File
     {
@@ -175,6 +199,7 @@ if (! function_exists('storage')) {
     }
 }
 
+//TODO: refactor the output, dump and dd methods
 if (! function_exists('output')) {
     function output(mixed $param): void
     {
