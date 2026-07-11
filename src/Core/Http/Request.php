@@ -171,6 +171,17 @@ class Request
         return $default;
     }
 
+    public function bearerToken(): ?string
+    {
+        $header = $this->header('Authorization');
+
+        if (! $header || ! str_starts_with($header, 'Bearer ')) {
+            return null;
+        }
+
+        return substr($header, 7);
+    }
+
     public function ip(): ?string
     {
         return $_SERVER['REMOTE_ADDR'] ?? null;
