@@ -2,11 +2,16 @@
 
 namespace Stella\Core\Http\Response;
 
-class Response
+abstract class Response
 {
-    private int $statusCode = 200;
-    private array $headers = [];
-    private string $body = '';
+    public function __construct(
+        private int $statusCode = 200,
+        private array $headers = []
+    )
+    {
+    }
+
+    abstract protected function getContent(): string;
 
     public function setStatusCode(int $code): self
     {
@@ -20,18 +25,19 @@ class Response
         return $this;
     }
 
-    public function setBody(string $body): self
+    public function statusCode(): int
     {
-        $this->body = $body;
-        return $this;
+        return $this->statusCode;
     }
 
     public function send(): void
     {
         http_response_code($this->statusCode);
+
         foreach ($this->headers as $name => $value) {
             header("$name: $value");
         }
-        echo $this->body;
+
+        echo $this->getContent();
     }
 }
