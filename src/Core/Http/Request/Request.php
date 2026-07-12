@@ -1,6 +1,6 @@
 <?php
 
-namespace Stella\Core\Http;
+namespace Stella\Core\Http\Request;
 
 //TODO: split methods off into traits
 class Request

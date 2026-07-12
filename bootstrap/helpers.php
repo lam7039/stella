@@ -3,7 +3,7 @@
 use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
-use Stella\Core\Http\Request;
+use Stella\Core\Http\Request\Request;
 use Stella\Core\Logging\Logger;
 use Stella\Core\Logging\ErrorType;
 use Stella\Core\Http\Session;
