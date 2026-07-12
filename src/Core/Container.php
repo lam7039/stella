@@ -14,6 +14,12 @@ use ReflectionUnionType;
 //TODO: make container work for all functions, not just the constructor (https://chatgpt.com/c/69d2de6d-11f8-8331-b832-86d141a10e13)
 class Container
 {
+    /**
+     * Singleton cache/state:
+     * - key missing => not a singleton
+     * - key exists with null => singleton registered but not yet instantiated
+     * - key exists with object => instantiated singleton
+     */
     private array $instances = [];
 
     public function __construct(private array $bindings = [])
