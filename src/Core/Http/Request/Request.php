@@ -6,27 +6,31 @@ namespace Stella\Core\Http\Request;
 class Request
 {
     private readonly ?RequestMethod $method;
-    private readonly array $headers;
-
-    private readonly array $post;
-    private readonly array $query;
-
     private readonly array $json;
-    private readonly string $body;
-
     private readonly array $input;
 
-    public function __construct()
+    private function __construct(
+        private readonly array $server,
+        private readonly array $query,
+        private readonly array $post,
+        private readonly string $body,
+        private readonly array $headers
+    )
     {
-        $this->method = RequestMethod::tryFrom($_SERVER['REQUEST_METHOD'] ?? '');
-        $this->headers = $this->loadHeaders();
-
-        $this->post = $_POST;
-        $this->query = $_GET;
-
-        [$this->body, $this->json] = $this->parseJson();
-
+        $this->method = RequestMethod::tryFrom($this->server['REQUEST_METHOD'] ?? '');
+        $this->json = $this->parseJson($this->body);
         $this->input = array_merge($this->query, $this->post, $this->json);
+    }
+
+    public static function capture(): static
+    {
+        return new static(
+            $_SERVER,
+            $_GET,
+            $_POST,
+            file_get_contents('php://input') ?: '',
+            self::loadHeaders($_SERVER)
+        );
     }
 
     public function post(string $key, mixed $default = null): mixed
@@ -76,7 +80,7 @@ class Request
 
     public function uri(): string
     {
-        return $_SERVER['REQUEST_URI'] ?? '/';
+        return $this->server['REQUEST_URI'] ?? '/';
     }
 
     public function fullUrl(): string
@@ -184,16 +188,14 @@ class Request
 
     public function ip(): ?string
     {
-        return $_SERVER['REMOTE_ADDR'] ?? null;
+        return $this->server['REMOTE_ADDR'] ?? null;
     }
 
-    private function parseJson(): array
+    private function parseJson(string $body): array
     {
         if (! $this->isJson()) {
-            return ['', []];
+            return [];
         }
-
-        $body = file_get_contents('php://input') ?: '';
 
         try {
             $json = json_decode(
@@ -205,23 +207,20 @@ class Request
             $json = [];
         }
 
-        return [
-            $body,
-            is_array($json) ? $json : []
-        ];
+        return is_array($json) ? $json : [];
     }
 
     private function scheme(): string
     {
-        return (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        return (! empty($this->server['HTTPS']) && $this->server['HTTPS'] !== 'off') ? 'https' : 'http';
     }
 
     private function host(): string
     {
-        return $_SERVER['HTTP_HOST'] ?? '';
+        return $this->server['HTTP_HOST'] ?? '';
     }
 
-    private function loadHeaders(): array
+    private static function loadHeaders(array $server): array
     {
         if (function_exists('getallheaders')) {
             return getallheaders();
@@ -229,19 +228,19 @@ class Request
 
         $headers = [];
 
-        foreach ($_SERVER as $key => $value) {
+        foreach ($server as $key => $value) {
             if (str_starts_with($key, 'HTTP_')) {
                 $name = str_replace('_', '-', substr($key, 5));
                 $headers[$name] = $value;
             }
         }
 
-        if (isset($_SERVER['CONTENT_TYPE'])) {
-            $headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
+        if (isset($server['CONTENT_TYPE'])) {
+            $headers['Content-Type'] = $server['CONTENT_TYPE'];
         }
 
-        if (isset($_SERVER['CONTENT_LENGTH'])) {
-            $headers['Content-Length'] = $_SERVER['CONTENT_LENGTH'];
+        if (isset($server['CONTENT_LENGTH'])) {
+            $headers['Content-Length'] = $server['CONTENT_LENGTH'];
         }
 
         return $headers;
