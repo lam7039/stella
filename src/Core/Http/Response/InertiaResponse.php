@@ -34,7 +34,7 @@ class InertiaResponse extends Response
 
         return '';
 
-        //TODO: use custom templating engine to render the view
+        //TODO: use custom templating engine to render the view as a fallback
         // return view('app', [
         //     'page' => json_encode($page, JSON_THROW_ON_ERROR),
         // ]);

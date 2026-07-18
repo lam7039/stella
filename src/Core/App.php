@@ -2,6 +2,10 @@
 
 namespace Stella\Core;
 
+use Stella\Core\Http\Request\Request;
+use Stella\Core\Http\Response\Response;
+use Stella\Core\Routing\Router;
+
 class App extends Container
 {
     private static ?self $instance = null;
@@ -36,5 +40,16 @@ class App extends Container
                 $serviceProvider->boot($this);
             }
         }
+    }
+
+    public function run(): Response
+    {
+        $request = Request::capture();
+
+        $router = $this->get(Router::class);
+
+        $route = $router->match($request);
+
+        return $route->run($request);
     }
 }
