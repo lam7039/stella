@@ -25,11 +25,11 @@ class Request
     public static function capture(): static
     {
         return new static(
-            $_SERVER,
-            $_GET,
-            $_POST,
-            file_get_contents('php://input') ?: '',
-            self::loadHeaders($_SERVER)
+            server: $_SERVER,
+            query: $_GET,
+            post: $_POST,
+            body: file_get_contents('php://input') ?: '',
+            headers: self::loadHeaders($_SERVER)
         );
     }
 
