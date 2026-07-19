@@ -11,7 +11,7 @@ class JsonResponse extends Response
     )
     {
         parent::__construct($statusCode, $headers);
-        $this->setHeader('Content-Type', 'application/json');
+        $this->withHeader('Content-Type', 'application/json');
     }
 
     protected function getContent(): string
