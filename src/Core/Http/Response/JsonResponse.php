@@ -10,8 +10,8 @@ class JsonResponse extends Response
         array $headers = []
     )
     {
+        $headers['Content-Type'] = 'application/json';
         parent::__construct($statusCode, $headers);
-        $this->withHeader('Content-Type', 'application/json');
     }
 
     protected function getContent(): string

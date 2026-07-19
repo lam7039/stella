@@ -14,7 +14,14 @@ class CometResponse extends Response
         int $statusCode = 200
     )
     {
-        parent::__construct($statusCode);
+        $headers = [];
+
+        if ($this->request->header('X-Comet')) {
+            $headers['Content-Type'] = 'application/json';
+            $headers['X-Comet'] = 'true';
+        }
+
+        parent::__construct($statusCode, $headers);
     }
 
     protected function getContent(): string
@@ -27,10 +34,6 @@ class CometResponse extends Response
         ];
 
         if ($this->request->header('X-Comet')) {
-            $this
-                ->withHeader('Content-Type', 'application/json')
-                ->withHeader('X-Comet', 'true');
-
             return json_encode($page, JSON_THROW_ON_ERROR);
         }
 
