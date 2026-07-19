@@ -4,7 +4,7 @@ namespace Stella\Core\Http\Response;
 
 use Stella\Core\Http\Request\Request;
 
-class InertiaResponse extends Response
+class NovaResponse extends Response
 {
     public function __construct(
         protected Request $request,
@@ -22,15 +22,7 @@ class InertiaResponse extends Response
             'component' => $this->component,
             'props'     => $this->props,
             'url'       => $this->request->uri(),
-            'version'   => config('app.version'), //TODO: versioning for assets and learn what this is for
         ];
-
-        if ($this->request->header('X-Inertia')) {
-            $this->setHeader('Content-Type', 'application/json');
-            $this->setHeader('X-Inertia', 'true');
-
-            return json_encode($page, JSON_THROW_ON_ERROR);
-        }
 
         return '';
 
