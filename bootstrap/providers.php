@@ -10,4 +10,3 @@ $app->register(\Stella\Providers\PipelineServiceProvider::class);
 $app->register(\Stella\Providers\RouterServiceProvider::class);
 // $app->register(\Stella\Providers\MiddlewareServiceProvider::class);
 // $app->register(\Stella\Providers\DatabaseServiceProvider::class);
-
