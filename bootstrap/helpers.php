@@ -4,6 +4,7 @@ use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Http\Request\Request;
+use Stella\Core\Http\Response\ResponseFactory;
 use Stella\Core\Http\Response\RedirectResponse;
 use Stella\Core\Logging\Logger;
 use Stella\Core\Logging\ErrorType;
@@ -152,13 +153,6 @@ if (! function_exists('session_flash_get')) {
     }
 }
 
-if (! function_exists('redirect')) {
-    function redirect(string $url, int $statusCode = 302): RedirectResponse
-    {
-        return new RedirectResponse($url, $statusCode);
-    }
-}
-
 if (! function_exists('logger')) {
     function logger(): Logger
     {
@@ -173,13 +167,19 @@ if (! function_exists('request')) {
     }
 }
 
-//TODO: create the Response class and use it here
-// if (! function_exists('response')) {
-//     function response(): Response
-//     {
-//         return app()->get(Response::class)
-//     }
-// }
+if (! function_exists('response')) {
+    function response(): ResponseFactory
+    {
+        return new ResponseFactory;
+    }
+}
+
+if (! function_exists('redirect')) {
+    function redirect(string $url, int $statusCode = 302): RedirectResponse
+    {
+        return response()->redirect($url, $statusCode);
+    }
+}
 
 //TODO: create the HttpException class and use it here
 // if (! function_exists('abort')) {
