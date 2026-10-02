@@ -4,6 +4,8 @@ use Stella\Core\App;
 use Stella\Core\Config\DotEnv;
 use Stella\Core\Config\Config;
 use Stella\Core\Http\Request\Request;
+use Stella\Core\Http\Response\Response;
+use Stella\Core\Http\Response\RedirectResponse;
 use Stella\Core\Logging\Logger;
 use Stella\Core\Logging\ErrorType;
 use Stella\Core\Http\Session;
@@ -148,6 +150,13 @@ if (! function_exists('session_flash_get')) {
     function session_flash_get(string $key, mixed $default = null): mixed
     {
         return session()->getFlash($key, $default);
+    }
+}
+
+if (! function_exists('redirect')) {
+    function redirect(string $url, int $statusCode = 302): Response
+    {
+        return new RedirectResponse($url, $statusCode);
     }
 }
 
