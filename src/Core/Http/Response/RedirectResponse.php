@@ -13,9 +13,4 @@ class RedirectResponse extends Response
         $headers['Location'] = $url;
         parent::__construct($statusCode, $headers);
     }
-
-    protected function getContent(): string
-    {
-        return '';
-    }
 }

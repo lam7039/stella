@@ -11,9 +11,4 @@ class EmptyResponse extends Response
     {
         parent::__construct($statusCode, $headers);
     }
-
-    protected function getContent(): string
-    {
-        return '';
-    }
 }

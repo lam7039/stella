@@ -9,9 +9,12 @@ abstract class Response
         private array $headers = [],
     ) {}
 
-    abstract protected function getContent(): string;
+    protected function getContent(): string
+    {
+        return '';
+    }
 
-    final public function content(): string
+    final public function body(): string
     {
         return $this->getContent();
     }
@@ -24,7 +27,7 @@ abstract class Response
             header("$name: $value");
         }
 
-        echo $this->content();
+        echo $this->body();
     }
 
     public function withHeader(string $name, string $value): static
