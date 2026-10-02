@@ -21,20 +21,26 @@ abstract class Response
 
     public function withHeader(string $name, string $value): static
     {
-        $headers = $this->headers;
-        $headers[$name] = $value;
+        $clone = clone $this;
+        $clone->headers[$name] = $value;
 
-        return new static($this->statusCode, $headers);
+        return $clone;
     }
 
     public function withHeaders(array $headers): static
     {
-        return new static($this->statusCode, [...$this->headers, ...$headers]);
+        $clone = clone $this;
+        $clone->headers = [...$this->headers, ...$headers];
+
+        return $clone;
     }
 
     public function withStatusCode(int $statusCode): static
     {
-        return new static($statusCode, $this->headers);
+        $clone = clone $this;
+        $clone->statusCode = $statusCode;
+
+        return $clone;
     }
 
     public function statusCode(): int
