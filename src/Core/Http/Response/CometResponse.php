@@ -41,6 +41,6 @@ class CometResponse extends Response
             $this->component,
             $this->props,
             $this->statusCode()
-        )->content();
+        )->body();
     }
 }
