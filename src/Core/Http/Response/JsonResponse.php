@@ -2,7 +2,7 @@
 
 namespace Stella\Core\Http\Response;
 
-class JsonResponse extends Response
+class JsonResponse extends HttpResponse
 {
     public function __construct(
         private readonly mixed $data,
