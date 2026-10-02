@@ -5,8 +5,8 @@ namespace Stella\Core\Http\Response;
 abstract class Response
 {
     public function __construct(
-        private int $statusCode = 200,
-        private array $headers = []
+        private readonly int $statusCode = 200,
+        private readonly array $headers = [],
     ) {}
 
     abstract protected function getContent(): string;
