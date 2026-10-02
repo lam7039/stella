@@ -2,7 +2,7 @@
 
 namespace Stella\Core\Http\Response;
 
-class HtmlResponse extends HttpResponse
+class FileResponse extends HttpResponse
 {
     public function __construct(
         private readonly string $path,
