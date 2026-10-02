@@ -49,6 +49,6 @@ class Router
             }
         }
 
-        throw new \RuntimeException('No matching route found for ' . $request->method()->value . ' ' . $request->uri());
+        throw new \RuntimeException(sprintf('No matching route found for %s %s', $request->method()->value, $request->uri()));
     }
 }
