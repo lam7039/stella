@@ -3,7 +3,7 @@
 namespace Stella\Core;
 
 use Stella\Core\Http\Request\Request;
-use Stella\Core\Http\Response\Response;
+use Stella\Core\Http\Response\HttpResponse;
 use Stella\Core\Routing\Router;
 use Stella\Providers\ServiceProvider;
 
@@ -37,7 +37,7 @@ class App extends Container
         }
     }
 
-    public function run(): Response
+    public function run(): HttpResponse
     {
         $request = Request::capture();
 

@@ -4,7 +4,7 @@ namespace Stella\Core\Http\Response;
 
 use Stella\Core\Http\Request\Request;
 
-class CometResponse extends Response
+class CometResponse extends HttpResponse
 {
     public function __construct(
         protected Request $request,

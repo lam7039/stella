@@ -2,7 +2,7 @@
 
 namespace Stella\Core\Http\Client;
 
-use Stella\Core\Http\Response\Response;
+use Stella\Core\Http\Response\HttpResponse;
 use Stella\Core\Http\Response\JsonResponse;
 
 class CurlTransport implements TransportInterface
@@ -11,7 +11,7 @@ class CurlTransport implements TransportInterface
         string $method,
         string $url,
         array $options = []
-    ): Response {
+    ): HttpResponse {
         $ch = curl_init();
 
         if ($ch === false) {

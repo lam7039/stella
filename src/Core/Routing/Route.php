@@ -4,7 +4,7 @@ namespace Stella\Core\Routing;
 
 use Stella\Core\Http\Request\Request;
 use Stella\Core\Http\Request\RequestMethod;
-use Stella\Core\Http\Response\Response;
+use Stella\Core\Http\Response\HttpResponse;
 
 class Route
 {
@@ -27,13 +27,13 @@ class Route
         return $this;
     }
 
-    public function run(Request $request): Response
+    public function run(Request $request): HttpResponse
     {
         if (is_callable($this->handler)) {
             return call_user_func($this->handler, $request);
         }
 
-        if ($this->handler instanceof Response) {
+        if ($this->handler instanceof HttpResponse) {
             return $this->handler;
         }
 
