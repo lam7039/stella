@@ -4,7 +4,7 @@ namespace Stella\Core\Http\Response;
 
 use Stella\Core\Http\Request\Request;
 
-class NovaResponse extends Response
+class NovaResponse extends HttpResponse
 {
     public function __construct(
         protected Request $request,

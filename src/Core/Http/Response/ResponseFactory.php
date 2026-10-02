@@ -4,9 +4,9 @@ namespace Stella\Core\Http\Response;
 
 final class ResponseFactory
 {
-    public function empty(int $statusCode = 204, array $headers = []): EmptyResponse
+    public function http(int $statusCode = 204, array $headers = []): HttpResponse
     {
-        return new EmptyResponse($statusCode, $headers);
+        return new HttpResponse($statusCode, $headers);
     }
 
     public function json(mixed $data, int $statusCode = 200, array $headers = []): JsonResponse
@@ -23,9 +23,4 @@ final class ResponseFactory
     {
         return new HtmlResponse($html, $statusCode, $headers);
     }
-
-    // public function http(mixed $data, int $statusCode = 200, array $headers = []): HttpResponse
-    // {
-    //     return new HttpResponse($data, $statusCode, $headers);
-    // }
 }

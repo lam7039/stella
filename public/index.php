@@ -1,5 +1,5 @@
 <?php
-// $start = microtime(true);
+$start = microtime(true);
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -15,6 +15,4 @@ date_default_timezone_set(config('app.timezone'));
 
 // throw new Exception('This is a test exception to verify the logger and exception handler are working correctly.');
 
-//app()->handleRequest(Request::capture());
-
-// echo microtime(true) - $start;
+echo '<br />' . microtime(true) - $start;

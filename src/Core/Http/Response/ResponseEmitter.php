@@ -4,7 +4,7 @@ namespace Stella\Core\Http\Response;
 
 final class ResponseEmitter
 {
-    public function emit(Response $response): void
+    public function emit(HttpResponse $response): void
     {
         http_response_code($response->statusCode());
 

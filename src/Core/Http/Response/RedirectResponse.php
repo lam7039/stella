@@ -2,7 +2,7 @@
 
 namespace Stella\Core\Http\Response;
 
-class RedirectResponse extends Response
+class RedirectResponse extends HttpResponse
 {
     public function __construct(
         private readonly string $url,

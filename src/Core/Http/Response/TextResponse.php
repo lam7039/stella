@@ -2,7 +2,7 @@
 
 namespace Stella\Core\Http\Response;
 
-class TextResponse extends Response
+class TextResponse extends HttpResponse
 {
     public function __construct(
         private readonly mixed $text,
