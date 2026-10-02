@@ -19,17 +19,6 @@ abstract class Response
         return $this->getContent();
     }
 
-    public function send(): void
-    {
-        http_response_code($this->statusCode);
-
-        foreach ($this->headers as $name => $value) {
-            header("$name: $value");
-        }
-
-        echo $this->body();
-    }
-
     public function withHeader(string $name, string $value): static
     {
         $headers = $this->headers;
