@@ -33,6 +33,10 @@ class Route
             return call_user_func($this->handler, $request);
         }
 
+        if ($this->handler instanceof Response) {
+            return $this->handler;
+        }
+
         [$controller, $method] = $this->handler;
 
         return new $controller()->{$method}($request);
