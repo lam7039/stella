@@ -5,8 +5,8 @@ namespace Stella\Core\Http\Response;
 abstract class Response
 {
     public function __construct(
-        private readonly int $statusCode = 200,
-        private readonly array $headers = [],
+        private int $statusCode = 200,
+        private array $headers = [],
     ) {}
 
     abstract protected function getContent(): string;
@@ -29,26 +29,20 @@ abstract class Response
 
     public function withHeader(string $name, string $value): static
     {
-        $clone = clone $this;
-        $clone->headers[$name] = $value;
+        $headers = $this->headers;
+        $headers[$name] = $value;
 
-        return $clone;
+        return new static($this->statusCode, $headers);
     }
 
     public function withHeaders(array $headers): static
     {
-        $clone = clone $this;
-        $clone->headers = [...$clone->headers, ...$headers];
-
-        return $clone;
+        return new static($this->statusCode, [...$this->headers, ...$headers]);
     }
 
     public function withStatusCode(int $statusCode): static
     {
-        $clone = clone $this;
-        $clone->statusCode = $statusCode;
-
-        return $clone;
+        return new static($statusCode, $this->headers);
     }
 
     public function statusCode(): int
