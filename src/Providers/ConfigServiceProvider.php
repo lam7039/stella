@@ -6,7 +6,7 @@ use Stella\Core\Container;
 use Stella\Core\Config\Config;
 use Stella\Core\Config\DotEnv;
 
-class ConfigServiceProvider
+class ConfigServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {

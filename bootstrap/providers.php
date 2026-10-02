@@ -1,12 +1,12 @@
 <?php
 
-$app->register(\Stella\Providers\ConfigServiceProvider::class);
-$app->register(\Stella\Providers\ExceptionServiceProvider::class);
-$app->register(\Stella\Providers\StorageServiceProvider::class);
-$app->register(\Stella\Providers\LoggerServiceProvider::class);
+$app->register(new \Stella\Providers\ConfigServiceProvider);
+$app->register(new \Stella\Providers\ExceptionServiceProvider);
+$app->register(new \Stella\Providers\StorageServiceProvider);
+$app->register(new \Stella\Providers\LoggerServiceProvider);
 
-$app->register(\Stella\Providers\HttpServiceProvider::class);
-$app->register(\Stella\Providers\PipelineServiceProvider::class);
-$app->register(\Stella\Providers\RouterServiceProvider::class);
-// $app->register(\Stella\Providers\MiddlewareServiceProvider::class);
-// $app->register(\Stella\Providers\DatabaseServiceProvider::class);
+$app->register(new \Stella\Providers\HttpServiceProvider);
+$app->register(new \Stella\Providers\PipelineServiceProvider);
+$app->register(new \Stella\Providers\RouterServiceProvider);
+// $app->register(new \Stella\Providers\MiddlewareServiceProvider);
+// $app->register(new \Stella\Providers\DatabaseServiceProvider);

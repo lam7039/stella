@@ -5,6 +5,7 @@ namespace Stella\Core;
 use Stella\Core\Http\Request\Request;
 use Stella\Core\Http\Response\Response;
 use Stella\Core\Routing\Router;
+use Stella\Providers\ServiceProvider;
 
 class App extends Container
 {
@@ -21,14 +22,8 @@ class App extends Container
         self::$instance = $this;
     }
 
-    public function register(string $serviceProviderClass): void
+    public function register(ServiceProvider $serviceProvider): void
     {
-        $serviceProvider = new $serviceProviderClass();
-
-        if (! method_exists($serviceProvider, 'register')) {
-            throw new \RuntimeException("Service provider must have a register method: {$serviceProviderClass}");
-        }
-
         $serviceProvider->register($this);
         $this->serviceProviders[] = $serviceProvider;
     }

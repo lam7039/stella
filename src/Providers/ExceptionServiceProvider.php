@@ -5,7 +5,7 @@ namespace Stella\Providers;
 use Stella\Core\Container;
 use Stella\Core\Exceptions\Handler;
 
-class ExceptionServiceProvider
+class ExceptionServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {

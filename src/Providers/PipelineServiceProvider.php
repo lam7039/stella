@@ -3,14 +3,14 @@
 namespace Stella\Providers;
 
 use Stella\Core\Container;
-use Stella\Core\Storage\StorageManager;
+use Stella\Core\Pipeline;
 
-class StorageServiceProvider implements ServiceProvider
+class PipelineServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {
-        $container->singleton(StorageManager::class, function () {
-            return new StorageManager(config('storage'));
+        $container->bind(Pipeline::class, function (Container $container) {
+            return new Pipeline($container);
         });
     }
 

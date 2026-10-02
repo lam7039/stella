@@ -5,7 +5,7 @@ namespace Stella\Providers;
 use Stella\Core\Container;
 use Stella\Core\Http\Session;
 
-class HttpServiceProvider
+class HttpServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {

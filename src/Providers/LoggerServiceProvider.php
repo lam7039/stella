@@ -5,7 +5,7 @@ namespace Stella\Providers;
 use Stella\Core\Container;
 use Stella\Core\Logging\Logger;
 
-class LoggerServiceProvider
+class LoggerServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {

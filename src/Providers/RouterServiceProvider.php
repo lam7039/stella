@@ -5,7 +5,7 @@ namespace Stella\Providers;
 use Stella\Core\Container;
 use Stella\Core\Routing\Router;
 
-class RouterServiceProvider
+class RouterServiceProvider implements ServiceProvider
 {
     public function register(Container $container): void
     {
