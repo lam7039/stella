@@ -1,6 +1,8 @@
 <?php
 
-namespace Stella\Core\Http\Response;
+namespace Stella\Core\Http;
+
+use Stella\Core\Http\Response\HttpResponse;
 
 final class ResponseEmitter
 {
@@ -15,5 +17,3 @@ final class ResponseEmitter
         echo $response->body();
     }
 }
-
-//TODO: put ResponseEmitter directly under the Http namespace?

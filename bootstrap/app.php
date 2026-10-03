@@ -15,5 +15,5 @@ $app->boot();
 
 $response = $app->run();
 
-$emitter = new \Stella\Core\Http\Response\ResponseEmitter;
+$emitter = new \Stella\Core\Http\ResponseEmitter;
 $emitter->emit($response);
