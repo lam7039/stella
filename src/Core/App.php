@@ -22,10 +22,16 @@ class App extends Container
         self::$instance = $this;
     }
 
-    public function register(ServiceProvider $serviceProvider): void
+    public function register(string $serviceProvider): void
     {
-        $serviceProvider->register($this);
-        $this->serviceProviders[] = $serviceProvider;
+        $provider = new $serviceProvider();
+
+        if (! $provider instanceof ServiceProvider) {
+            throw new \RuntimeException(sprintf("Service provider %s must implement ServiceProvider interface", $serviceProvider));
+        }
+
+        $provider->register($this);
+        $this->serviceProviders[] = $provider;
     }
 
     public function boot(): void
