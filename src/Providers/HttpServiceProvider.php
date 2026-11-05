@@ -14,6 +14,6 @@ class HttpServiceProvider implements ServiceProvider
 
     public function boot(Container $container): void
     {
-        $container->get(Session::class)->start();
+        $container->make(Session::class)->start();
     }
 }

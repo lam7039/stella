@@ -47,7 +47,7 @@ class App extends Container
     {
         $request = Request::capture();
 
-        $router = $this->get(Router::class);
+        $router = $this->make(Router::class);
 
         $route = $router->match($request);
 

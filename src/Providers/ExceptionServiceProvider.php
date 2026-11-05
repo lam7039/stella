@@ -14,6 +14,6 @@ class ExceptionServiceProvider implements ServiceProvider
 
     public function boot(Container $container): void
     {
-        $container->get(Handler::class)->register();
+        $container->make(Handler::class)->register();
     }
 }

@@ -16,7 +16,7 @@ class ConfigServiceProvider implements ServiceProvider
 
     public function boot(Container $container): void
     {
-        $container->get(DotEnv::class)->load();
+        $container->make(DotEnv::class)->load();
 
         $config = [];
 
@@ -28,6 +28,6 @@ class ConfigServiceProvider implements ServiceProvider
             $config[$name] = require $file;
         }
 
-        $container->get(Config::class)->load($config);
+        $container->make(Config::class)->load($config);
     }
 }

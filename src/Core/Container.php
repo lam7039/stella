@@ -22,6 +22,9 @@ class Container
      */
     private array $instances = [];
 
+    //TODO: separate bindings and instances into two different arrays, one for bindings and one for instances, to avoid confusion and make it clearer which is which. This will also allow for better type hinting and autocompletion in IDEs.
+    // bind(): transient binding. singleton(): shared instance. instance(): register an already constructed object. make(): resolve an instance.
+
     public function __construct(private array $bindings = [])
     {
         foreach ($this->bindings as $key => $concrete) {
@@ -52,7 +55,7 @@ class Container
         return isset($this->bindings[$abstract]);
     }
 
-    public function get(string $abstract, array $parameters = []): object
+    public function make(string $abstract, array $parameters = []): object
     {
         if (
             array_key_exists($abstract, $this->instances) &&
@@ -61,8 +64,14 @@ class Container
             return $this->instances[$abstract];
         }
 
+        // Resolve the concrete class if it is not bound in the container, but exists as a class
+        //TODO: seems to check on bindings and not on instances
         if (! $this->has($abstract)) {
-            throw ContainerException::ClassNotFound($abstract);
+            if (! class_exists($abstract)) {
+                throw ContainerException::ClassNotFound($abstract);
+            }
+
+            return $this->resolve($abstract, $parameters);
         }
 
         $object = $this->resolve($this->bindings[$abstract], $parameters);
@@ -81,7 +90,7 @@ class Container
         }
 
         if (is_string($target)) {
-            $target = $this->get($target);
+            $target = $this->make($target);
         }
 
         $reflection = new ReflectionMethod($target, $method);
@@ -172,7 +181,7 @@ class Container
         }
 
         if (! $type->isBuiltin()) {
-            return $this->get($type->getName(), $parameters);
+            return $this->make($type->getName(), $parameters);
         }
 
         throw ContainerException::ParameterNotFound($name);
@@ -229,3 +238,15 @@ class Container
     //     throw ContainerException::ParameterNotFound($name);
     // }
 }
+
+
+
+//TODO: add circular dependency detection to avoid infinite loops when resolving dependencies, something with a resolution stack that keeps track of classes being resolved and throws an exception if a class is already in the stack when trying to resolve it again. This will help catch circular dependencies like the following example:
+// The problem is displayed below:
+// class A {
+//     public function __construct (B $b) {}
+// }
+
+// class B {
+//     public function __construct (A $a) {}
+// }

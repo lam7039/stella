@@ -93,21 +93,21 @@ if (! function_exists('app')) {
 if (! function_exists('env')) {
     function env(string $key, mixed $default = null): mixed
     {
-        return app()->get(DotEnv::class)->get($key, $default);
+        return app()->make(DotEnv::class)->get($key, $default);
     }
 }
 
 if (! function_exists('config')) {
     function config(string $key, mixed $default = null): mixed
     {
-        return app()->get(Config::class)->get($key, $default);
+        return app()->make(Config::class)->get($key, $default);
     }
 }
 
 if (! function_exists('session')) {
     function session(): Session
     {
-        return app()->get(Session::class);
+        return app()->make(Session::class);
     }
 }
 
@@ -156,14 +156,14 @@ if (! function_exists('session_flash_get')) {
 if (! function_exists('logger')) {
     function logger(): Logger
     {
-        return app()->get(Logger::class);
+        return app()->make(Logger::class);
     }
 }
 
 if (! function_exists('request')) {
     function request(): Request
     {
-        return app()->get(Request::class);
+        return app()->make(Request::class);
     }
 }
 
@@ -199,7 +199,7 @@ if (! function_exists('file_object')) {
 if (! function_exists('storage')) {
     function storage(?string $disk = null): StorageManager|StorageInterface
     {
-        $manager = app()->get(StorageManager::class);
+        $manager = app()->make(StorageManager::class);
 
         return $disk
             ? $manager->disk($disk)

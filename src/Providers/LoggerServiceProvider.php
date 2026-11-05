@@ -14,6 +14,6 @@ class LoggerServiceProvider implements ServiceProvider
 
     public function boot(Container $container): void
     {
-        $container->get(Logger::class)->reset();
+        $container->make(Logger::class)->reset();
     }
 }

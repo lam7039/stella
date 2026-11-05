@@ -46,7 +46,7 @@ final class Pipeline
                 }
 
                 if (is_string($pipe)) {
-                    $pipe = $this->container->get($pipe);
+                    $pipe = $this->container->make($pipe);
                 }
 
                 if (is_callable($pipe)) {
