@@ -7,7 +7,10 @@ class HttpResponse implements Response
     public function __construct(
         private int $statusCode = 200,
         private array $headers = [],
-    ) {}
+    ) {
+        $this->validateStatusCode($statusCode);
+        $this->validateHeaders($headers);
+    }
 
     protected function getContent(): string
     {
@@ -21,6 +24,8 @@ class HttpResponse implements Response
 
     public function withHeader(string $name, string $value): static
     {
+        $this->validateHeader($name, $value);
+
         $clone = clone $this;
         $clone->headers[$name] = $value;
 
@@ -29,6 +34,8 @@ class HttpResponse implements Response
 
     public function withHeaders(array $headers): static
     {
+        $this->validateHeaders($headers);
+
         $clone = clone $this;
         $clone->headers = [...$this->headers, ...$headers];
 
@@ -37,6 +44,8 @@ class HttpResponse implements Response
 
     public function withStatusCode(int $statusCode): static
     {
+        $this->validateStatusCode($statusCode);
+
         $clone = clone $this;
         $clone->statusCode = $statusCode;
 
@@ -51,5 +60,30 @@ class HttpResponse implements Response
     public function headers(): array
     {
         return $this->headers;
+    }
+
+    private function validateStatusCode(int $statusCode): void
+    {
+        if ($statusCode < 100 || $statusCode > 599) {
+            throw new \InvalidArgumentException('Invalid HTTP status code: ' . $statusCode);
+        }
+    }
+
+    private function validateHeaders(array $headers): void
+    {
+        foreach ($headers as $name => $value) {
+            $this->validateHeader($name, $value);
+        }
+    }
+
+    private function validateHeader(string $name, string $value): void
+    {
+        if ($name === '' || preg_match("/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/D", $name) !== 1) {
+            throw new \InvalidArgumentException('Invalid HTTP header name: ' . $name);
+        }
+
+        if (preg_match('/[\r\n]/', $value) === 1) {
+            throw new \InvalidArgumentException('Invalid HTTP header value: ' . $value);
+        }
     }
 }
