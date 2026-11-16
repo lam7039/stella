@@ -17,7 +17,7 @@ class App extends Container
         return self::$instance ?? throw new \RuntimeException("App not initialized");
     }
 
-    public function __construct()
+    public function __construct(public readonly ApplicationContext $context)
     {
         self::$instance = $this;
     }

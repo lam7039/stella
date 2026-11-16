@@ -7,7 +7,12 @@ mb_http_output('UTF-8');
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/helpers.php';
 
-$app = new \Stella\Core\App;
+$context = new \Stella\Core\ApplicationContext(
+    environment: env('APP_ENV', 'development'),
+    debug: env('APP_DEBUG', true),
+);
+
+$app = new \Stella\Core\App($context);
 
 require_once __DIR__ . '/providers.php';
 
