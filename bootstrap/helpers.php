@@ -13,7 +13,7 @@ use Stella\Core\Storage\StorageManager;
 use Stella\Core\Storage\Contracts\StorageInterface;
 use Stella\Support\Str;
 use Stella\Support\Collection;
-use Stella\Support\File;
+use Stella\Support\Filesystem;
 
 if (! function_exists('str')) {
     function str(string $value = ''): Str
@@ -190,9 +190,9 @@ if (! function_exists('redirect')) {
 // }
 
 if (! function_exists('file_object')) {
-    function file_object(string $path): File
+    function file_object(string $path): Filesystem
     {
-        return File::of($path);
+        return Filesystem::at($path);
     }
 }
 

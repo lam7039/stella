@@ -1,12 +1,12 @@
 <?php
 
-namespace Stella\Support\Traits\File;
+namespace Stella\Support\Traits\Filesystem;
 
 trait OperationTrait
 {
-    use FileTrait;
+    use FilesystemTrait;
 
-    public function copy(string $destination): self
+    public function copy(string $destination): static
     {
         if (! is_file($this->path())) {
             throw new \RuntimeException("File not found: {$this->path()}");
@@ -20,16 +20,16 @@ trait OperationTrait
             throw new \RuntimeException("Failed to copy file to: {$destination}");
         }
 
-        return $this->with($destination);
+        return $this->newInstanceAt($destination);
     }
 
-    public function move(string $destination): self
+    public function move(string $destination): static
     {
         if (! rename($this->path(), $destination)) {
             throw new \RuntimeException("Failed to move file to: {$destination}");
         }
 
-        return $this->with($destination);
+        return $this->newInstanceAt($destination);
     }
 
     public function remove(): bool

@@ -1,10 +1,10 @@
 <?php
 
-namespace Stella\Support\Traits\File;
+namespace Stella\Support\Traits\Filesystem;
 
 trait DirectoryTrait
 {
-    public static function mkdir(string $path, int $permissions = 0755): void
+    public static function createDirectory(string $path, int $permissions = 0755): void
     {
         if (is_file($path)) {
             throw new \RuntimeException("Path includes a file: {$path}");
@@ -19,13 +19,13 @@ trait DirectoryTrait
         }
     }
 
-    public static function isEmpty(string $path): bool
+    public static function isDirectoryEmpty(string $path): bool
     {
         if (! is_dir($path)) {
             throw new \RuntimeException("Not a directory: {$path}");
         }
 
-        return count(scandir($path)) <= 2; // only . and ..
+        return ! new \FilesystemIterator($path)->valid();
     }
 
     public static function removeDirectory(string $path): bool

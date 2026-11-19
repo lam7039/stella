@@ -2,16 +2,16 @@
 
 namespace Stella\Core\Logging;
 
-use Stella\Support\File;
+use Stella\Support\Filesystem;
 
 class Logger
 {
-    private readonly File $debugFile;
-    private readonly File $templateFile;
+    private readonly Filesystem $debugFile;
+    private readonly Filesystem $templateFile;
 
     public function __construct(?string $debugFile = null, ?string $templateFile = null)
     {
-        File::mkdir(storage_path('logs'));
+        Filesystem::createDirectory(storage_path('logs'));
 
         $this->debugFile = file_object(storage_path($debugFile ?? 'logs/debug.html'));
         $this->templateFile = file_object(public_path($templateFile ?? 'templates/debug.html'));
@@ -32,12 +32,8 @@ class Logger
         }
     }
 
-    public function append(
-        string $message,
-        ErrorType $type,
-        ?string $file = null,
-        ?int $line = null
-    ): void {
+    public function append(string $message, ErrorType $type, ?string $file = null, ?int $line = null): void
+    {
         //TODO: improve resolveCaller
         // debug_print_backtrace();
         // exit;
@@ -74,13 +70,12 @@ class Logger
         $file = str($file)->html()->value();
 
         return <<<HTML
-
-                        <tr class="{$type->value}">
-                            <td>{$timestamp}</td>
-                            <td>{$message}</td>
-                            <td>{$file}</td>
-                            <td>{$line}</td>
-                        </tr>
+            <tr class="{$type->value}">
+                <td>{$timestamp}</td>
+                <td>{$message}</td>
+                <td>{$file}</td>
+                <td>{$line}</td>
+            </tr>
         HTML;
     }
 

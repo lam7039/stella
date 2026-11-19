@@ -8,8 +8,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/helpers.php';
 
 $context = new \Stella\Core\ApplicationContext(
-    environment: env('APP_ENV', 'development'),
-    debug: env('APP_DEBUG', true),
+    environment: config('app.environment', 'development'),
+    debug: config('app.debug', true),
 );
 
 $app = new \Stella\Core\App($context);

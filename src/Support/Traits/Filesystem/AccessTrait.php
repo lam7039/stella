@@ -1,10 +1,10 @@
 <?php
 
-namespace Stella\Support\Traits\File;
+namespace Stella\Support\Traits\Filesystem;
 
 trait AccessTrait
 {
-    use FileTrait;
+    use FilesystemTrait;
 
     public function size(): int
     {

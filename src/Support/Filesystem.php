@@ -2,8 +2,8 @@
 
 namespace Stella\Support;
 
-use Stella\Support\Traits\File\{
-    FileTrait,
+use Stella\Support\Traits\Filesystem\{
+    FilesystemTrait,
     DirectoryTrait,
     AccessTrait,
     ReadTrait,
@@ -11,9 +11,9 @@ use Stella\Support\Traits\File\{
     OperationTrait,
 };
 
-class File
+class Filesystem
 {
-    use FileTrait;
+    use FilesystemTrait;
     use DirectoryTrait;
     use AccessTrait;
     use ReadTrait;
@@ -22,14 +22,14 @@ class File
 
     public function __construct(private readonly string $path) {}
 
-    public static function of(string $path): self
+    public static function at(string $path): static
     {
-        return new self($path);
+        return new static($path);
     }
 
-    public function with(string $path): self
+    protected function newInstanceAt(string $path): static
     {
-        return self::of($path);
+        return static::at($path);
     }
 
     public function path(): string
