@@ -7,8 +7,8 @@ require_once __DIR__ . '/polyfills.php';
 require_once __DIR__ . '/helpers.php';
 
 if (extension_loaded('mbstring')) {
-    mb_internal_encoding(config('app.encoding'));
-    mb_http_output(config('app.encoding'));
+    mb_internal_encoding(config('app.encoding', 'UTF-8'));
+    mb_http_output(config('app.encoding', 'UTF-8'));
 }
 
 $context = new \Stella\Core\ApplicationContext(
