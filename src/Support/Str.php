@@ -28,14 +28,14 @@ final class Str
 
     public function __construct(private readonly string $value = '') {}
 
-    public static function of(string $value): self
+    public static function of(string $value): static
     {
-        return new self($value);
+        return new static($value);
     }
 
-    protected function with(string $value): self
+    protected function newInstanceOf(string $value): static
     {
-        return self::of($value);
+        return static::of($value);
     }
 
     public function value(): string

@@ -6,23 +6,23 @@ trait MutateTrait
 {
     use StringTrait;
 
-    public function replace(string|array $search, string $replace): self
+    public function replace(string|array $search, string $replace): static
     {
-        return $this->with(str_replace($search, $replace, $this->value()));
+        return $this->newInstanceOf(str_replace($search, $replace, $this->value()));
     }
 
-    public function remove(string|array $search): self
+    public function remove(string|array $search): static
     {
-        return $this->with($this->replace($search, '')->value());
+        return $this->newInstanceOf($this->replace($search, '')->value());
     }
 
-    public function prepend(string $value): self
+    public function prepend(string $value): static
     {
-        return $this->with($value . $this->value());
+        return $this->newInstanceOf($value . $this->value());
     }
 
-    public function append(string $value): self
+    public function append(string $value): static
     {
-        return $this->with($this->value() . $value);
+        return $this->newInstanceOf($this->value() . $value);
     }
 }

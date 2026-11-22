@@ -6,23 +6,23 @@ trait TrimTrait
 {
     use StringTrait;
 
-    public function trim(string $characters = " \n\r\t\v\x00"): self
+    public function trim(string $characters = " \n\r\t\v\x00"): static
     {
-        return $this->with(trim($this->value(), $characters));
+        return $this->newInstanceOf(trim($this->value(), $characters));
     }
 
-    public function ltrim(string $characters = " \n\r\t\v\x00"): self
+    public function ltrim(string $characters = " \n\r\t\v\x00"): static
     {
-        return $this->with(ltrim($this->value(), $characters));
+        return $this->newInstanceOf(ltrim($this->value(), $characters));
     }
 
-    public function rtrim(string $characters = " \n\r\t\v\x00"): self
+    public function rtrim(string $characters = " \n\r\t\v\x00"): static
     {
-        return $this->with(rtrim($this->value(), $characters));
+        return $this->newInstanceOf(rtrim($this->value(), $characters));
     }
 
-    public function squish(string|array $characters = [" ", "\n", "\r", "\t", "\v", "\0"]): self
+    public function squish(string|array $characters = [" ", "\n", "\r", "\t", "\v", "\0"]): static
     {
-        return $this->with(str_replace($characters, '', $this->value()));
+        return $this->newInstanceOf(str_replace($characters, '', $this->value()));
     }
 }

@@ -11,18 +11,18 @@ trait UtilTrait
         return mb_strlen($this->value());
     }
 
-    public function repeat(int $times): self
+    public function repeat(int $times): static
     {
-        return $this->with(str_repeat($this->value(), $times));
+        return $this->newInstanceOf(str_repeat($this->value(), $times));
     }
 
-    public function limit(int $limit, string $end = '...'): self
+    public function limit(int $limit, string $end = '...'): static
     {
         if ($this->length() > $limit) {
-            return $this->with(mb_substr($this->value(), 0, $limit) . $end);
+            return $this->newInstanceOf(mb_substr($this->value(), 0, $limit) . $end);
         }
 
-        return $this->with($this->value());
+        return $this->newInstanceOf($this->value());
     }
 
     //TODO: separate uuid generation to a separate class, this is not a string utility

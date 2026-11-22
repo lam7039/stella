@@ -6,23 +6,23 @@ trait CaseTrait
 {
     use StringTrait;
 
-    public function upper(): self
+    public function upper(): static
     {
-        return $this->with(mb_strtoupper($this->value()));
+        return $this->newInstanceOf(mb_strtoupper($this->value()));
     }
 
-    public function lower(): self
+    public function lower(): static
     {
-        return $this->with(mb_strtolower($this->value()));
+        return $this->newInstanceOf(mb_strtolower($this->value()));
     }
 
-    public function capitalize(): self
+    public function capitalize(): static
     {
-        return $this->with(mb_ucfirst($this->value()));
+        return $this->newInstanceOf(mb_ucfirst($this->value()));
     }
 
-    public function title(): self
+    public function title(): static
     {
-        return $this->with(mb_convert_case($this->value(), MB_CASE_TITLE));
+        return $this->newInstanceOf(mb_convert_case($this->value(), MB_CASE_TITLE));
     }
 }

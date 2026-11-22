@@ -8,29 +8,31 @@ trait EscapeTrait
         int $flags = ENT_QUOTES | ENT_SUBSTITUTE,
         ?string $encoding = 'UTF-8',
         bool $doubleEncode = true
-    ): self {
-        return $this->with(htmlspecialchars($this->value(), $flags, $encoding, $doubleEncode));
+    ): static
+    {
+        return $this->newInstanceOf(htmlspecialchars($this->value(), $flags, $encoding, $doubleEncode));
     }
 
-    public function htmlDecode(int $flags = ENT_QUOTES | ENT_SUBSTITUTE): self
+    public function htmlDecode(int $flags = ENT_QUOTES | ENT_SUBSTITUTE): static
     {
-        return $this->with(htmlspecialchars_decode($this->value(), $flags));
+        return $this->newInstanceOf(htmlspecialchars_decode($this->value(), $flags));
     }
 
     public function entityDecode(
         int $flags = ENT_QUOTES | ENT_SUBSTITUTE,
         ?string $encoding = 'UTF-8'
-    ) {
-        return $this->with(html_entity_decode($this->value(), $flags, $encoding));
+    ): static
+    {
+        return $this->newInstanceOf(html_entity_decode($this->value(), $flags, $encoding));
     }
 
-    public function urlEncode(): self
+    public function urlEncode(): static
     {
-        return $this->with(rawurlencode($this->value()));
+        return $this->newInstanceOf(rawurlencode($this->value()));
     }
 
-    public function urlDecode(): self
+    public function urlDecode(): static
     {
-        return $this->with(rawurldecode($this->value()));
+        return $this->newInstanceOf(rawurldecode($this->value()));
     }
 }
