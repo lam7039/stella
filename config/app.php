@@ -5,4 +5,5 @@ return [
     'timezone'  => env('APP_TIMEZONE', 'Europe/Amsterdam'),
     'env'       => env('APP_ENV', 'development'),
     'debug'     => env('APP_DEBUG', false),
+    'encoding'  => env('APP_ENCODING', 'UTF-8'),
 ];
