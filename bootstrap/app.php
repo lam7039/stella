@@ -6,11 +6,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/polyfills.php';
 require_once __DIR__ . '/helpers.php';
 
-if (function_exists('mb_internal_encoding')) {
+if (extension_loaded('mbstring')) {
     mb_internal_encoding(config('app.encoding'));
-}
-
-if (function_exists('mb_http_output')) {
     mb_http_output(config('app.encoding'));
 }
 
