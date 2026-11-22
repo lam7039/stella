@@ -12,7 +12,7 @@ if (extension_loaded('mbstring')) {
 }
 
 $context = new \Stella\Core\ApplicationContext(
-    environment: config('app.environment', 'development'),
+    environment: config('app.env', 'development'),
     debug: config('app.debug', true),
 );
 
