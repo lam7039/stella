@@ -3,6 +3,7 @@
 namespace Stella\Support;
 
 use Stella\Support\Traits\Str\{
+    StringTrait,
     CaseTrait,
     TrimTrait,
     SearchTrait,
@@ -16,6 +17,7 @@ use Stella\Support\Traits\Str\{
 
 final class Str
 {
+    use StringTrait;
     use CaseTrait;
     use TrimTrait;
     use SearchTrait;
