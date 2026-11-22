@@ -1,4 +1,13 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Polyfills
+|--------------------------------------------------------------------------
+|
+| Provides basic compatibility implementations for optional PHP
+| extensions. These implementations may have reduced functionality.
+|
+*/
 
 if (! defined('MB_CASE_UPPER')) {
     define('MB_CASE_UPPER', 0);
@@ -43,14 +52,14 @@ if (! function_exists('mb_strtoupper')) {
 if (! function_exists('mb_ucfirst')) {
     function mb_ucfirst(string $string, ?string $encoding = null): string
     {
-        return ucfirst(mb_strtolower($string, $encoding));
+        return ucfirst($string);
     }
 }
 
 if (! function_exists('mb_lcfirst')) {
     function mb_lcfirst(string $string, ?string $encoding = null): string
     {
-        return lcfirst(mb_strtoupper($string, $encoding));
+        return lcfirst($string);
     }
 }
 
@@ -60,7 +69,7 @@ if (! function_exists('mb_convert_case')) {
         return match ($mode) {
             MB_CASE_UPPER => mb_strtoupper($string, $encoding),
             MB_CASE_LOWER => mb_strtolower($string, $encoding),
-            MB_CASE_TITLE => ucwords(strtolower($string)),
+            MB_CASE_TITLE => ucwords(mb_strtolower($string, $encoding)),
             default => $string,
         };
     }
