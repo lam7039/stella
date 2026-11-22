@@ -21,6 +21,7 @@ trait TrimTrait
         return $this->newInstanceOf(rtrim($this->value(), $characters));
     }
 
+    //TODO: this squishes "  Hello     World   " to "HelloWorld" instead of "Hello World", is this intended?
     public function squish(string|array $characters = [" ", "\n", "\r", "\t", "\v", "\0"]): static
     {
         return $this->newInstanceOf(str_replace($characters, '', $this->value()));
