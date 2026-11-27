@@ -8,12 +8,20 @@ final class ResponseEmitter
 {
     public function emit(HttpResponse $response): void
     {
-        http_response_code($response->statusCode());
-
-        foreach ($response->headers() as $name => $value) {
-            header("$name: $value");
+        if (headers_sent($file, $line)) {
+            throw new \RuntimeException(sprintf('Headers already sent in %s on line %d.', $file, $line));
         }
 
-        echo $response->body();
+        http_response_code($response->statusCode());
+
+        foreach ($response->headers() as $name => $values) {
+            foreach ((array) $values as $value) {
+                header(sprintf("%s: %s", $name, $value), false);
+            }
+        }
+
+        if ($response->body() !== '') {
+            echo $response->body();
+        }
     }
 }

@@ -56,7 +56,7 @@ class DotEnv
             return $value;
         }
 
-        return match (strtolower($value)) {
+        return match (mb_strtolower($value)) {
             'true', '(true)' => true,
             'false', '(false)' => false,
             'null', '(null)' => null,
